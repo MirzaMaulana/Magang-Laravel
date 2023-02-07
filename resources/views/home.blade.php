@@ -2,28 +2,25 @@
 
 @section('content')
 <div class="container">
-    <img src="{{ asset('storage/'. Auth::user()->image) }}" alt="">
-    <h1>Name         : {{ Auth::user()->name }}</h1>
+    <div class="profile pb-3 shadow-sm">
+    <div class="background-profile"></div>
+    <div class="card-body mx-5 d-flex justify-content-between">
+        <div class="title">
+            <img src="{{ asset('storage/avatars/' . Auth::user()->image )}}" class="img-profile rounded-circle" width="180">
+            <h1 class="profile-title">{{ Auth::user()->name }}</h1>
+            <p class="card-text text-muted fs-5">{{ Auth::user()->alamat }}</p>
+            <p class="card-text">{{ Auth::user()->email }} - <b>{{ Auth::user()->role }}</b> - <i>{{ Auth::user()->tanggal_lahir }}</i></p>
+        </div>
+        <div class="button m-5">
+            <a href="/update" class="btn btn-large btn-primary">Edit Profile</a>
+        </div>
+    </div>
+    </div>
+    {{-- <h1>Name         : {{ Auth::user()->name }}</h1>
     <h2>Email        : {{ Auth::user()->email }}</h2>
     <h2>Tanggal Lahir: {{ Auth::user()->tanggal_lahir }}</h2>
     <h2>Jenis Kelamin: {{ Auth::user()->jenis_kelamin }}</h2>
     <h2>alamat       : {{ Auth::user()->alamat }}</h2>
-    {{-- <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div> --}}
+    <img src="{{ asset('storage/avatars/' . Auth::user()->image )}}"> --}}
 </div>
 @endsection

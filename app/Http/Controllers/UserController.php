@@ -16,6 +16,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $name)
     {
+       
         $request->validate(
             [
             'name' => ['required', 'string', 'max:255'],
@@ -24,19 +25,18 @@ class UserController extends Controller
             'alamat' => ['required', 'string', 'max:255'],
             ]
         );
-      
-        $request->file('image')->storeAs('image', $request->image);  
+        $filename = $request->image->getClientOriginalName();
+        $request->image->storeAs('avatars', $filename);
    
 
         $data = [
-            'image' =>  $request->image,
+            'image' =>  $filename,
             'name' => $request->name,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'alamat' => $request->alamat,
         ];
 
-        dd($data);
         $users = Auth::user();
        $findUser = User::find($users->id);
        $findUser->update($data);

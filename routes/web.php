@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\DashboardUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,7 @@ Route::prefix('my-profile')->middleware(['auth', 'verified'])->group(function() 
     Route::get('/', [MyProfileController::class, 'index'])->name('my.profile.index');
     Route::put('/', [MyProfileController::class, 'update'])->name('my.profile.update');
 });
+
+Route::get('users', [DashboardUserController::class, 'index'])->middleware('auth')->name('users');
+
+Route::delete('/users/{id}', [DashboardUserController::class, 'destroy']);

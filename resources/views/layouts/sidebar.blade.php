@@ -27,11 +27,19 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link">
+               <li class="nav-item ">
+                    <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-home"></i>
                         <p>
                             Home
+                        </p>
+                    </a>
+                </li>
+               <li class="nav-item">
+                    <a href="{{ route('users') }}" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            User Info
                         </p>
                     </a>
                 </li>

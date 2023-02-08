@@ -1,0 +1,8 @@
+body {
+    background-image: url(img/background.jpg);
+    background-size: cover;
+    height: 100vh;
+}
+.submit button {
+    padding: 3px 10em;
+}

@@ -1,12 +1,12 @@
 .background-profile {
-    border-radius: 30px;
+    border-radius: 20px;
     width: auto;
     height: 200px;
     background: rgb(92, 249, 255);
     background-image: linear-gradient(
         90deg,
         rgba(92, 249, 255, 1) 0%,
-        rgba(0, 31, 255, 1) 100%
+        rgb(0, 145, 255) 100%
     );
 }
 .card-text {
@@ -21,5 +21,5 @@
     margin-top: -110px;
 }
 .profile {
-    border-radius: 30px;
+    border-radius: 20px;
 }

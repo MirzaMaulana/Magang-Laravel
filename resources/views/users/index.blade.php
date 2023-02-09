@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="border-bottom pb-2">All Users Status</h2>
     @if (session()->has('success'))
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

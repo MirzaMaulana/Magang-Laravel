@@ -13,9 +13,9 @@ class UserController extends Controller
     {
         return datatables()
             ->eloquent(User::query()->latest())
-            ->addColumn('action', function () {
+            ->addColumn('action', function ($user) {
                 return '
-                <form action="/user/" method="POST">
+                <form action=" ' . route('user.destroy', $user->id) . ' " method="POST">
                 <input type="hidden" name="_token" value="'. @csrf_token() .'">
                 <input type="hidden" name="_method" value="DELETE">
                 <button class="btn btn-sm btn-danger mr-2">
@@ -34,16 +34,11 @@ class UserController extends Controller
     {
         return view('user.index');
     }
-    public function destroy($id)
-    {
-    $item = User::findOrFail($id);
-    $path = public_path('storage/avatars/' . $item->image);
-    if(File::exists($path))
-    {
-        File::delete($path);
-    }
-    $item->delete();
 
-    return redirect('/user')->with('success', 'User deleted successfully');
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return redirect('/user')->with('success', 'User deleted successfully');
     }
 }

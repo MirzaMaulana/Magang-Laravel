@@ -33,9 +33,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Route::put('/update/edit', [UserController::class, 'update']);
 
-// Route::get('users', [DashboardUserController::class, 'index'])->middleware('auth')->name('users');
+Route::get('users', [DashboardUserController::class, 'index'])->middleware('auth')->name('users');
 
-// Route::delete('/users/{id}', [DashboardUserController::class, 'destroy']);
+Route::delete('/users/{id}', [DashboardUserController::class, 'destroy']);
 Route::middleware(['auth', 'verified'])->group(function() {
 Route::prefix('my-profile')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [MyProfileController::class, 'index'])->name('my.profile.index');
@@ -47,7 +47,7 @@ Route::prefix('user')->group(function() {
         Route::controller(UserController::class)->group(function () {
             Route::get('/list',  'list')->name('user.list');
             Route::get('/',  'index')->name('user.index');
-            Route::delete('/user/{id}', 'destroy');
+            Route::delete('/{user}', 'destroy')->name('user.destroy');
         });
 })->name('user');
 });

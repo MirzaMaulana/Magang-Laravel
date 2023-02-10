@@ -35,14 +35,14 @@
                         </p>
                     </a>
                 </li>
-               {{-- <li class="nav-item">
+               <li class="nav-item">
                     <a href="{{ route('users') }}" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
                             User Info
                         </p>
                     </a>
-                </li> --}}
+                </li>
                <li class="nav-item">
                     <a href="{{ route('user.index') }}" class="nav-link {{ Request::is('user') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-users"></i>

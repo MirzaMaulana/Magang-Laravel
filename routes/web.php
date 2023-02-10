@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,15 +29,28 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/update', [UserController::class, 'edit']);
+// Route::get('/update', [UserController::class, 'edit']);
 
-Route::put('/update/edit', [UserController::class, 'update']);
+// Route::put('/update/edit', [UserController::class, 'update']);
 
+// Route::get('users', [DashboardUserController::class, 'index'])->middleware('auth')->name('users');
+
+// Route::delete('/users/{id}', [DashboardUserController::class, 'destroy']);
+Route::middleware(['auth', 'verified'])->group(function() {
 Route::prefix('my-profile')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [MyProfileController::class, 'index'])->name('my.profile.index');
     Route::put('/', [MyProfileController::class, 'update'])->name('my.profile.update');
 });
 
-Route::get('users', [DashboardUserController::class, 'index'])->middleware('auth')->name('users');
 
-Route::delete('/users/{id}', [DashboardUserController::class, 'destroy']);
+Route::prefix('user')->group(function() {
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/list',  'list')->name('user.list');
+            Route::get('/',  'index')->name('user.index');
+            Route::delete('/user/{id}', 'destroy');
+        });
+})->name('user');
+});
+
+
+    

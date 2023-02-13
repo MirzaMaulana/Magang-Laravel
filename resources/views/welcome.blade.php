@@ -7,77 +7,86 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 
         <style>
             body {
-                font-family: 'Nunito', sans-serif;
+                font-family: 'ubuntu', sans-serif;
             }
         </style>
-        <link rel="stylesheet" href="css/welcome.css">
     </head>
     <body>
-            @if (Route::has('login'))
-                <div class="container my-3">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-end text-dark fs-5">Home</a>
-                    @else
-                <div class="mx-auto card rounded-5 py-4 mt-5 shadow container" style="width: 30rem">
-                <div class="card-body">
-                   <h4 class="card-title text-center">Agent Login</h4>
-                   <p class="card-subtitle mb-2 text-muted text-center">Hey, enter your details for <br> sign in to your account</p>
-                   <form method="POST" action="{{ route('login') }}" class="mt-4 mx-4">
-                        @csrf
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter Email" required autocomplete="email" autofocus>
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
 
-                        <input id="password" type="password" class="form-control mt-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                    </ul>
 
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
 
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
 
-                            <label class="form-check-label" for="remember">
-                                {{ __('Remember Me') }}
-                             </label> 
-                             {{-- <div class="text-center ms-2" style="margin-top: -8px">
-                             @if (Route::has('password.request'))
-                                     <a class="btn btn-link " href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
                                     </a>
-                                @endif 
-                        </div> --}}
-                        </div>
-                      
-                        <div class="submit mt-3 text-center">
-                            <button type="submit" class=" btn btn-primary">
-                            {{ __('Login') }}
-                            </button>
-                        </div>
-                        
-                        <div class="text-center my-3">
-                            <p>Not a member? <a href="{{ route('register') }}">Register</a></p>
-                       </div>
-                        
-                    </form>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
                 </div>
             </div>
-                    @endauth
-                </div>
-            @endif
-
-            
+        </nav>
+         @if (session()->has('error'))
+        <div class="alert alert-danger absolute alert-dismissible fade show container" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        <main class="habbits container d-flex justify-content-between">
+            <div class="title mt-4">
+                <h1 class="fw-bold display-1 mt-5">Oops!</h1>
+                <h1 class="fw-bold mb-4">We're Launching Soon</h1>
+                <p>Lorem ipsum dolor sit amet consectetur <br>
+                 adipisicing elit. Et earum corporis dignissimos neque, aliquam a!</p>
+                <button class="btn btn-large btn-primary px-5 fw-bold rounded-3">Sign Up</button>
+            </div>
+            <img src="/main.png" alt="" class="mt-5" width="650">
+        </main>
     </body>
 </html>

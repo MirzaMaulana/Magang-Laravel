@@ -16,7 +16,7 @@
             
             <h1 class="profile-title">{{ Auth::user()->name }}</h1>
             <p class="card-text text-muted fs-5">{{ Auth::user()->alamat }}</p>
-            <p class="card-text">{{ Auth::user()->email }} - <b>{{ Auth::user()->role }}</b> - <i>{{ Auth::user()->tanggal_lahir }}</i></p>
+            <p class="card-text">{{ Auth::user()->email }}  <b>{{ Auth::user()->role }}</b>  <i>{{ Auth::user()->tanggal_lahir }}</i></p>
         </div>
         <div class="button">
             <a href="{{ route('my.profile.index') }}" class="btn btn-large btn-primary rounded-3">Edit Profile</a>

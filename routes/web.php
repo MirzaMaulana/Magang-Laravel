@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\EditUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,15 +28,16 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->middleware('Active')->name('home');
 
 // Route::get('/update', [UserController::class, 'edit']);
 
 // Route::put('/update/edit', [UserController::class, 'update']);
 
-Route::get('users', [DashboardUserController::class, 'index'])->middleware('auth')->name('users');
+// Route::get('users', [DashboardUserController::class, 'index'])->middleware('auth')->name('users');
 
-Route::delete('/users/{id}', [DashboardUserController::class, 'destroy']);
+// Route::delete('/users/{id}', [DashboardUserController::class, 'destroy']);
+
 Route::middleware(['auth', 'verified'])->group(function() {
 Route::prefix('my-profile')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [MyProfileController::class, 'index'])->name('my.profile.index');
@@ -43,10 +45,12 @@ Route::prefix('my-profile')->middleware(['auth', 'verified'])->group(function() 
 });
 
 
-Route::prefix('user')->group(function() {
+Route::prefix('user')->middleware('SuperAdmin')->group(function() {
         Route::controller(UserController::class)->group(function () {
             Route::get('/list',  'list')->name('user.list');
             Route::get('/',  'index')->name('user.index');
+            Route::get('/{user}' , 'edit')->name('user.edit');
+            Route::put('/{user}', 'update')->name('user.update');
             Route::delete('/{user}', 'destroy')->name('user.destroy');
         });
 })->name('user');

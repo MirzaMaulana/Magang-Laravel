@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'tanggal_lahir',
         'role',
+        'status',
         'jenis_kelamin',
         'alamat',
         'image',
@@ -49,6 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
        protected $attributes = [
+        'status' => 'Active',
         'role' => 'Admin',
         'image' => '',
         

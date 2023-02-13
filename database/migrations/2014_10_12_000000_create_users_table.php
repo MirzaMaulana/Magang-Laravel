@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->date('tanggal_lahir')->nullable();
             $table->string('role');
+            $table->enum('status', ['Active', 'Blocked']);
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan'])->nullable();
             $table->string('alamat')->nullable();
             $table->string('image')->nullable();

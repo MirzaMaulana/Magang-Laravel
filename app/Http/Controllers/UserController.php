@@ -33,8 +33,8 @@ class UserController extends Controller
             })
             ->addColumn('image', function($user) {
                 return $user->image
-                ? '<img src="/storage/avatars/' . $user->image . '" class="rounded-circle" height="30" width="30">'
-                : '<img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1" class="rounded-circle" height="30" width="30">';
+                ? '<img src="/storage/avatars/' . $user->image . '" class="rounded-circle shadow-sm" height="30" width="30">'
+                : '<img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1" class="shadow-sm rounded-circle" height="30" width="30">';
             })
             ->addColumn('status', function($user){
                 return $user->status == 'Active'

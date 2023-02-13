@@ -4,7 +4,7 @@
 <div class="container">
     <div class="profile pb-3 shadow">
     <div class="background-profile">
-        <p><i class="nav-icon ms-3 mt-3 fa fa-address-card"> </i> Profile</p>
+        <p><i class="nav-icon ms-3 mt-3 fa fa-address-card"> </i> {{ Auth::user()->role }} : <b class="text-success fw-bold">{{ Auth::user()->status }}</b></p>
     </div>
     <div class="card-body mx-5 d-flex justify-content-between">
         <div class="title">

@@ -60,5 +60,20 @@
             });
         });
 
+        function destroy(event)
+        {
+            event.preventDefault();
+            $.ajax({
+                url: event.target.action,
+                type: event.target.method,
+                data: {
+                    "_method": "DELETE",
+                    "_token": $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function() {
+                    dataTable.ajax.reload();
+                }
+            });
+        };
     </script>
 @endpush

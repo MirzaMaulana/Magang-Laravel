@@ -21,9 +21,6 @@ class MyProfileController extends Controller
         $request->validate(
             [
             'name' => ['required', 'string', 'max:255'],
-            'tanggal_lahir' => ['required', 'date'],
-            'jenis_kelamin' => ['required'],
-            'alamat' => ['required', 'string', 'max:255'],
             'image' => ['required']
             ]
         );

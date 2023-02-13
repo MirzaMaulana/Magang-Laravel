@@ -19,7 +19,7 @@ class UserController extends Controller
             ->addColumn('action', function ($user) {
                 return '
                 <div class="d-flex">
-                <form action=" ' . route('user.destroy', $user->id) . ' " method="POST">
+                <form onsubmit="destroy(\'event\')" action=" ' . route('user.destroy', $user->id) . ' " method="POST">
                 <input type="hidden" name="_token" value="'. @csrf_token() .'">
                 <input type="hidden" name="_method" value="DELETE">
                 <button class="btn-danger btn btn-sm  mr-2" onclick="return confirm(\'Are you sure you want to delete this user?\')">

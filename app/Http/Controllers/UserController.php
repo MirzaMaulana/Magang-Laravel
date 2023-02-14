@@ -14,12 +14,12 @@ class UserController extends Controller
     public function list()
     {
         return datatables()
-            ->eloquent(User::query()->latest())
+            ->eloquent(User::query()->where('role', '!=', 'SuperAdmin')->latest())
             
             ->addColumn('action', function ($user) {
                 return '
                 <div class="d-flex">
-                <form onsubmit="destroy(\'event\')" action=" ' . route('user.destroy', $user->id) . ' " method="POST">
+                <form action=" ' . route('user.destroy', $user->id) . ' " method="POST">
                 <input type="hidden" name="_token" value="'. @csrf_token() .'">
                 <input type="hidden" name="_method" value="DELETE">
                 <button class="btn-danger btn btn-sm  mr-2" onclick="return confirm(\'Are you sure you want to delete this user?\')">
@@ -36,7 +36,7 @@ class UserController extends Controller
                 ? '<img src="/storage/avatars/' . $user->image . '" class="rounded-circle shadow-sm" height="30" width="30">'
                 : '<img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1" class="shadow-sm rounded-circle" height="30" width="30">';
             })
-            ->addColumn('status', function($user){
+            ->editColumn('status', function($user){
                 return $user->status == 'Active'
                 ? '<p class="text-success fw-bold">'.$user->status.'</p>' : '<p class="text-danger fw-bold">'.$user->status.'</p>';
             })

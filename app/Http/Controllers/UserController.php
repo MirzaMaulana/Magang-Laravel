@@ -73,11 +73,18 @@ class UserController extends Controller
        //Validasi data update user
         $request->validate(
             [
-            'name' => ['required', 'string', 'max:255']
+            'name' => ['required', 'string', 'max:255'],
+            'image' => ['required']
             ]
         );
-
+        //Mengecek apakah user upload image
+        if ($request->hasFile('image')) {
+          // Menginput image user
+          $filename = $request->image->getClientOriginalName();
+          $request->image->storeAs('avatars', $filename);
+        }
         $data = [
+            'image' => $filename,
             'name' => $request->name,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,

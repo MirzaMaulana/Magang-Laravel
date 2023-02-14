@@ -54,7 +54,7 @@
                     { data: 'image', sortable: false, searchable: false},
                     { data: 'name' },
                     { data: 'email' },
-                    { data: 'status', sortable:false, searchable:false},
+                    { data: 'status', searchable:false},
                     { data: 'action', sortable: false,},
                 ],
             });

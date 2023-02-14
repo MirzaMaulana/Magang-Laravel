@@ -184,6 +184,40 @@
                                     @enderror
                                 </div>
                             </div>
+                            {{-- image --}}
+                            <div class="row mb-3">
+                                <label
+                                    for="image"
+                                    class="col-md-4 col-form-label text-md-end"
+                                >{{ __('Foto') }}</label>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <div>
+                                            <input type="hidden" name="oldImage" value="{{ $user->image }}">
+                                            <input
+                                                name="image"
+                                                class="form-control @error('image') is-invalid @enderror"
+                                                value="{{ old( $user->image) }}"
+                                                type="file"
+                                                accept="image/*"
+                                                id="formFile"
+                                            >
+                                            <small
+                                                for="formFile"
+                                                class="form-label"
+                                            >Edit Foto User</small>
+                                        </div>
+                                    </div>
+                                    @error('image')
+                                        <span
+                                            class="invalid-feedback"
+                                            role="alert"
+                                        >
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             {{-- Save --}}
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">

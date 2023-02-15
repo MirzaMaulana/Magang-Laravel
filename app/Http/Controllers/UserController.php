@@ -69,28 +69,30 @@ class UserController extends Controller
         return view('user.edit', compact('user'));
     }
     public function update(Request $request, User $user)
-    {
-       //Validasi data update user
+    {   
+        //Validasi data update user
         $request->validate(
             [
             'name' => ['required', 'string', 'max:255'],
-            'image' => ['required']
+            'image' => ['image', 'max:2048']
             ]
         );
-        //Mengecek apakah user upload image
-        if ($request->hasFile('image')) {
-          // Menginput image user
-          $filename = $request->image->getClientOriginalName();
-          $request->image->storeAs('avatars', $filename);
-        }
+        // input data
         $data = [
-            'image' => $filename,
             'name' => $request->name,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'alamat' => $request->alamat,
             'status' => $request->status,
         ];
+        //Mengecek apakah user upload image
+        if ($request->hasFile('image')) {
+          // Menginput image user
+          $filename = $request->image->getClientOriginalName();
+          $request->image->storeAs('avatars', $filename);
+          $data= ['image'=> $filename];
+        }
+       
         //Menyimpan data update user
         $findUser = User::find($user->id);
         $findUser->update($data);

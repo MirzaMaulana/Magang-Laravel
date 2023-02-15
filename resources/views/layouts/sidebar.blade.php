@@ -35,12 +35,22 @@
                         </p>
                     </a>
                 </li>
+               <li class="nav-item dropdown">
+                  <a class="nav-link d-flex justify-content-between" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <p><i class="nav-icon fa fa-tags"></i> Tags</p> 
+                    <i class="dropdown-toggle"></i>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('tag.create') }}">Create</a></li>
+                    <li><a class="dropdown-item" href="{{ route('tag.index') }}">List tags</a></li>
+                  </ul>
+                </li>
                 @if (auth()->user()->role == 'SuperAdmin')
                     <li class="nav-item">
                     <a href="{{ route('user.index') }}" class="nav-link {{ Request::is('user*') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
-                            Member
+                            Members
                         </p>
                     </a>
                 </li>

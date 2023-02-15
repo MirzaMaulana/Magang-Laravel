@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EditUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MyProfileController;
-use App\Http\Controllers\DashboardUserController;
-use App\Http\Controllers\EditUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +55,23 @@ Route::prefix('user')->middleware('SuperAdmin')->group(function() {
         });
 })->name('user');
 });
+
+Route::prefix('tag')->middleware('auth')->group(function() {
+        Route::controller(TagsController::class)->group(function () {
+            Route::get('/create', 'create')->name('tag.create');
+            Route::post('/', 'store')->name('tag.input');
+            Route::get('/',  'list')->name('tag.list');
+            Route::get('/list',  'index')->name('tag.index');
+            Route::get('/{tag}' , 'edit')->name('tag.edit');
+            Route::put('/{tag}', 'update')->name('tag.update');
+            Route::delete('/{tag}', 'destroy')->name('tag.destroy');
+        });
+})->name('tag');
+
+
+
+
+
 
 
     

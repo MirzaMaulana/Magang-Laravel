@@ -36,7 +36,7 @@
                     </a>
                 </li>
                <li class="nav-item dropdown">
-                  <a class="nav-link d-flex justify-content-between" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a class="nav-link d-flex justify-content-between {{ Request::is('tag*') ? 'active' : '' }}" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <p><i class="nav-icon fa fa-tags"></i> Tags</p> 
                     <i class="dropdown-toggle"></i>
                   </a>

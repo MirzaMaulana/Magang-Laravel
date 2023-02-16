@@ -35,14 +35,51 @@
                         </p>
                     </a>
                 </li>
-               <li class="nav-item dropdown">
-                  <a class="nav-link d-flex justify-content-between {{ Request::is('tag*') ? 'active' : '' }}" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <p><i class="nav-icon fa fa-tags"></i> Tags</p> 
-                    <i class="dropdown-toggle"></i>
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link {{ Request::is('tag*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-tags"></i>
+                    <p>
+                      Tags
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
                   </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ route('tag.create') }}">Create</a></li>
-                    <li><a class="dropdown-item" href="{{ route('tag.index') }}">List tags</a></li>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="{{ route('tag.create') }}" class="nav-link">
+                        <i class="nav-icon fa fa-file-signature"></i>
+                        <p>Create</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ route('tag.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-list-ol"></i>
+                        <p>List Tags</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                {{-- Category --}}
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link {{ Request::is('category*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-layer-group"></i>
+                    <p>
+                      Category
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="{{ route('category.create') }}" class="nav-link">
+                        <i class="nav-icon fa fa-file-signature"></i>
+                        <p>Create</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ route('category.list') }}" class="nav-link">
+                        <i class="nav-icon fa fa-list-ol"></i>
+                        <p>List Tags</p>
+                      </a>
+                    </li>
                   </ul>
                 </li>
                 @if (auth()->user()->role == 'SuperAdmin')

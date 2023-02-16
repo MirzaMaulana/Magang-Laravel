@@ -45,7 +45,7 @@
             $('table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('tag.list') }}",
+                ajax: "{{ route('category.list') }}",
                 order: [],
                 columns: [
                     { data: 'DT_RowIndex', sortable: false, searchable: false },

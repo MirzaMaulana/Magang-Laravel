@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EditUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MyProfileController;
@@ -67,6 +68,18 @@ Route::prefix('tag')->middleware('auth')->group(function() {
             Route::delete('/{tag}', 'destroy')->name('tag.destroy');
         });
 })->name('tag');
+
+Route::prefix('category')->middleware('auth')->group(function() {
+        Route::controller(CategoryController::class)->group(function () {
+            Route::get('/create', 'create')->name('category.create');
+            Route::post('/', 'store')->name('category.input');
+            Route::get('/',  'list')->name('category.list');
+            Route::get('/list',  'index')->name('category.index');
+            Route::get('/{category}' , 'edit')->name('category.edit');
+            Route::put('/{category}', 'update')->name('category.update');
+            Route::delete('/{category}', 'destroy')->name('category.destroy');
+        });
+})->name('category');
 
 
 

@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-   use  HasApiTokens, HasFactory, Notifiable;
+    use  HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
+        'description',
         'created_by'
     ];
 
-     protected $attributes = [
+    protected $attributes = [
         'created_by' => ''
     ];
 }

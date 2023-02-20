@@ -43,7 +43,7 @@
                             {{-- Save --}}
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-dark">
+                                    <button type="submit" id="submit" class="btn btn-dark">
                                         {{ __('Create category') }}
                                     </button>
                                 </div>
@@ -54,4 +54,5 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection

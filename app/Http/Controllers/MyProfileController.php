@@ -15,15 +15,9 @@ class MyProfileController extends Controller
     {
         return view('my-profile.index');
     }
-     public function update(Request $request, User $name)
+    public function update(Request $request, User $name)
     {
-        //Validasi data update user
-        $request->validate(
-            [
-            'name' => ['required', 'string', 'max:255'],
-            'image' => ['image', 'max:2048']
-            ]
-        );
+
         // input data
         $data = [
             'name' => $request->name,
@@ -33,10 +27,10 @@ class MyProfileController extends Controller
         ];
         //Mengecek apakah user upload image
         if ($request->hasFile('image')) {
-          // Menginput image user
-          $filename = $request->image->getClientOriginalName();
-          $request->image->storeAs('avatars', $filename);
-          $data= ['image'=> $filename];
+            // Menginput image user
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('avatars', $filename);
+            $data = ['image' => $filename];
         }
         //Menyimpan data update user
         $users = Auth::user();

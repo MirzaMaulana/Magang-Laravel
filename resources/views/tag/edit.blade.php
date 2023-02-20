@@ -33,7 +33,7 @@
 
                                 <div class="col-md-6">
                                     <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror"
-                                        name="description" placeholder="description tag">{{ $post->description }}</textarea>
+                                        name="description" placeholder="description tag">{{ $tag->description }}</textarea>
 
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">
@@ -56,4 +56,5 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection

@@ -80,4 +80,5 @@
             height: 100
         });
     </script>
+    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection

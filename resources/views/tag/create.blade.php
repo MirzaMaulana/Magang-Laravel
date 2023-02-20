@@ -54,4 +54,5 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection

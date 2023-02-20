@@ -86,21 +86,22 @@
                             {{-- image --}}
                             <div class="row mb-3">
                                 <label for="image"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Foto') }}</label>
+                                    class="col-md-4 mt-4 col-form-label text-md-end">{{ __('Foto') }}</label>
                                 <div class="col-md-6">
-                                    @if (Auth::user()->image)
-                                        <img src="{{ asset('storage/avatars/' . Auth::user()->image) }}"
-                                            class="img-thumbnail" height="70" width="70">
-                                    @else
-                                        <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
-                                            class="img-thumbnail" height="70" width="70">
-                                    @endif
                                     <div class="input-group my-3">
+                                        @if (Auth::user()->image)
+                                            <img id="profile" class="mx-2 img-thumbnail"
+                                                src="{{ asset('storage/avatars/' . auth()->user()->image) }}"
+                                                width="70">
+                                        @else
+                                            <img id="profile" class="mx-2 img-thumbnail"
+                                                src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
+                                                width="70">
+                                        @endif
+
                                         <div>
-                                            <input type="hidden" name="oldImage" value="{{ auth()->user()->image }}">
                                             <input name="image" class="form-control @error('image') is-invalid @enderror"
-                                                value="{{ old('image', auth()->user()->image) }}" type="file"
-                                                accept="image/*" id="formFile">
+                                                onchange="loadFile(event)" type="file" accept="image/*" id="formFile">
                                             <small for="formFile" class="form-label">Silahkan Upload Foto Anda</small>
                                         </div>
                                     </div>
@@ -125,4 +126,11 @@
             </div>
         </div>
     </div>
+    <script>
+        let loadFile = function(event) {
+            var image = document.getElementById('profile');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection

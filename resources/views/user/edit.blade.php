@@ -125,14 +125,15 @@
                                 <label for="image"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Foto') }}</label>
                                 <div class="col-md-6">
-                                    @if (Auth::user()->image)
-                                        <img src="{{ asset('storage/avatars/' . Auth::user()->image) }}"
-                                            class="img-thumbnail" height="70" width="70">
-                                    @else
-                                        <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
-                                            class="img-thumbnail" height="70" width="70">
-                                    @endif
-                                    <div class="input-group my-3">
+
+                                    <div class="input-group">
+                                        @if ($user->image)
+                                            <img src="{{ asset('storage/avatars/' . $user->image) }}"
+                                                class="img-thumbnail mx-2" height="70" width="70">
+                                        @else
+                                            <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
+                                                class="img-thumbnail mx-2" height="70" width="70">
+                                        @endif
                                         <div>
                                             <input type="hidden" name="oldImage" value="{{ $user->image }}">
                                             <input name="image" class="form-control @error('image') is-invalid @enderror"
@@ -162,4 +163,11 @@
             </div>
         </div>
     </div>
+    <script>
+        let loadFile = function(event) {
+            var image = document.getElementById('profile');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection

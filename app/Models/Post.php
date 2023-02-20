@@ -6,19 +6,19 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Auth;
 
-class Tags extends Model
+class Post extends Model
 {
     use  HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
-        'description',
-        'created_by'
+        'title',
+        'image',
+        'content',
+        'created_by',
     ];
 
     protected $attributes = [
-        'created_by' => ''
+        'image' => ''
     ];
 }

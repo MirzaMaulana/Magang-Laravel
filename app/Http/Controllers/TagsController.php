@@ -19,79 +19,83 @@ class TagsController extends Controller
 
     public function store(Request $request)
     {
-    $request->validate([
-        'name' => ['required', 'max:255']
-    ]);
+        $request->validate([
+            'name' => ['required', 'max:255'],
+            'description' => ['required', 'max:255']
+        ]);
 
-    $data = [
-        'name' => $request->name,
-        'created_by' => auth()->user()->name
-    ];
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'created_by' => auth()->user()->name
+        ];
 
-    $tag = Tags::create($data);
+        $tag = Tags::create($data);
 
-    return redirect('/tag/list')->with('success', 'Success Create Tags');
+        return redirect('/tag/list')->with('success', 'Success Create Tags');
     }
 
-    public function list()
+    public function list(Request $request)
     {
         return datatables()
-            ->eloquent(Tags::query()->latest())
-            
+            ->eloquent(Tags::query()->when(!$request->order, function ($query) {
+                $query->latest();
+            }))
+
             ->addColumn('action', function ($tag) {
                 return '
                 <div class="d-flex">
-                <form action="'.  route('tag.destroy', $tag->id) .'" method="POST">
-                <input type="hidden" name="_token" value="'. @csrf_token() .'">
+                <form onsubmit="destroy(event)" action="' .  route('tag.destroy', $tag->id) . '" method="POST">
+                <input type="hidden" name="_token" value="' . @csrf_token() . '">
                 <input type="hidden" name="_method" value="DELETE">
-                <button class="btn-danger btn btn-sm  mr-2" onclick="return confirm(\'Are you sure you want to delete this user?\')">
+                <button class="btn-danger btn btn-sm  mr-2">
                 <i class="fa fa-trash"></i>
                 </button>
                 </td>
                 </form>
-                 <a href="'. route('tag.edit', $tag->id) .'" class="btn btn-sm btn-primary rounded"><i class="fa fa-pen"></i></a>
+                 <a href="' . route('tag.edit', $tag->id) . '" class="btn btn-sm btn-primary rounded"><i class="fa fa-pen"></i></a>
                  </div>  
             ';
             })
             ->addIndexColumn()
-            ->escapeColumns(['action']) 
+            ->escapeColumns(['action'])
             ->toJson();
-        }
-         public function index()
-        {
-            return view('tag.list');
-        }
-    
-    
-        public function destroy(Tags $tag)
-        {
-           $tag->delete();
-       
-                return redirect('/tag/list')->with('success', 'Tags deleted successfully');
-        }
-        
-        public function edit($id)
-        {
-               $tag = Tags::find($id);
-               return view('tag.edit', compact('tag'));
-        }
-
-        public function update(Request $request, Tags $tag)
-        {   
-               //Validasi data update tag
-               $request->validate(
-                   [
-                   'name' => ['required', 'string', 'max:255'],
-                   ]
-               );
-               // input data
-               $data = [
-                   'name' => $request->name,
-               ];
-              //Menyimpan data update tag
-              $findtag = Tags::find($tag->id);
-                $findtag->update($data);
-              //mengembalikan ke halaman ketika user berhasil update
-              return redirect('/tag/list')->with('success', 'User updated successfully');
-          }
     }
+    public function index()
+    {
+        return view('tag.list');
+    }
+
+
+    public function destroy(Tags $tag)
+    {
+        $tag->delete();
+
+        return redirect('/tag/list')->with('success', 'Tags deleted successfully');
+    }
+
+    public function edit($id)
+    {
+        $tag = Tags::find($id);
+        return view('tag.edit', compact('tag'));
+    }
+
+    public function update(Request $request, Tags $tag)
+    {
+        //Validasi data update tag
+        $request->validate([
+            'name' => ['required', 'max:255'],
+            'description' => ['required', 'max:255']
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+        ];
+        //Menyimpan data update tag
+        $findtag = Tags::find($tag->id);
+        $findtag->update($data);
+        //mengembalikan ke halaman ketika user berhasil update
+        return redirect('/tag/list')->with('success', 'User updated successfully');
+    }
+}

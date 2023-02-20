@@ -7,34 +7,21 @@
                 <div class="card">
                     <div class="card-header">{{ __('Edit Profile') }}</div>
                     <div class="card-body">
-                        <form
-                            action=""
-                            method="POST"
-                            enctype="multipart/form-data"
-                        >
+                        <form action="" method="POST" enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             {{-- Name --}}
                             <div class="row mb-3">
-                                <label
-                                    for="name"
-                                    class="col-md-4 col-form-label text-md-end"
-                                >{{ __('Name') }}</label>
+                                <label for="name"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                                 <div class="col-md-6">
-                                    <input
-                                        id="name"
-                                        type="text"
-                                        class="form-control @error('name') is-invalid @enderror"
-                                        name="name"
-                                        value="{{ $user->name }}"
-                                    >
+                                    <input id="name" type="text"
+                                        class="form-control @error('name') is-invalid @enderror" name="name"
+                                        value="{{ $user->name }}">
 
                                     @error('name')
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -43,58 +30,36 @@
 
                             {{-- Email --}}
                             <div class="row mb-3">
-                                <label
-                                    for="email"
-                                    class="col-md-4 col-form-label text-md-end"
-                                >{{ __('Email User') }}</label>
+                                <label for="email"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Email User') }}</label>
 
                                 <div class="col-md-6">
-                                    <input
-                                        id="email"
-                                        disabled
-                                        type="email"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        name="email"
-                                        value="{{ $user->email}}"
-                                    >
+                                    <input id="email" disabled type="email"
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ $user->email }}">
 
                                     @error('email')
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
-                           
+
                             {{-- Status --}}
                             <div class="row mb-3">
-                                <label
-                                    for="status"
-                                    class="col-md-4 col-form-label text-md-end"
-                                >{{ __('Status') }}</label>
+                                <label for="status"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Status') }}</label>
 
                                 <div class="col-md-6">
-                                    <select
-                                        class="form-control @error('status') is-invalid @enderror"
-                                        aria-label="Default select example"
-                                        name="status"
-                                    >
-                                        <option
-                                            value="Active" class="text-success"
-                                        >Active</option>
-                                        <option
-                                            value="Blocked" class="text-danger"
-                                        >Blocked</option>
+                                    <select class="form-control @error('status') is-invalid @enderror"
+                                        aria-label="Default select example" name="status">
+                                        <option value="Active" class="text-success">Active</option>
+                                        <option value="Blocked" class="text-danger">Blocked</option>
                                     </select>
 
                                     @error('status')
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -102,25 +67,16 @@
                             </div>
                             {{-- Tanggal Lahir --}}
                             <div class="row mb-3">
-                                <label
-                                    for="tanggal_lahir"
-                                    class="col-md-4 col-form-label text-md-end"
-                                >{{ __('Tanggal Lahir') }}</label>
+                                <label for="tanggal_lahir"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Tanggal Lahir') }}</label>
 
                                 <div class="col-md-6">
-                                    <input
-                                        id="tanggal_lahir"
-                                        type="date"
+                                    <input id="tanggal_lahir" type="date"
                                         class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                        name="tanggal_lahir"
-                                        value="{{ old('tanggal_lahir', $user->tanggal_lahir) }}"
-                                    >
+                                        name="tanggal_lahir" value="{{ old('tanggal_lahir', $user->tanggal_lahir) }}">
 
                                     @error('tanggal_lahir')
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -128,32 +84,22 @@
                             </div>
                             {{-- Jenis Kelamin --}}
                             <div class="row mb-3">
-                                <label
-                                    for="jenis_kelamin"
-                                    class="col-md-4 col-form-label text-md-end"
-                                >{{ __('Jenis Kelamin') }}</label>
+                                <label for="jenis_kelamin"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Jenis Kelamin') }}</label>
 
                                 <div class="col-md-6">
-                                    <select
-                                        class="form-control @error('Jenis Kelamin') is-invalid @enderror"
-                                        aria-label="Default select example"
-                                        name="jenis_kelamin"
-                                    >
+                                    <select class="form-control @error('Jenis Kelamin') is-invalid @enderror"
+                                        aria-label="Default select example" name="jenis_kelamin">
                                         <option
-                                            {{ old('jenis_kelamin', $user->jenis_kelamin) === "Laki-Laki" ? 'selected' : '' }}
-                                            value="Laki-Laki"
-                                        >Laki-Laki</option>
+                                            {{ old('jenis_kelamin', $user->jenis_kelamin) === 'Laki-Laki' ? 'selected' : '' }}
+                                            value="Laki-Laki">Laki-Laki</option>
                                         <option
-                                            {{ old('jenis_kelamin', $user->jenis_kelamin) === "Perempuan" ? 'selected' : '' }}
-                                            value="Perempuan"
-                                        >Perempuan</option>
+                                            {{ old('jenis_kelamin', $user->jenis_kelamin) === 'Perempuan' ? 'selected' : '' }}
+                                            value="Perempuan">Perempuan</option>
                                     </select>
 
                                     @error('jenis_kelamin')
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -161,24 +107,14 @@
                             </div>
                             {{-- Alamat --}}
                             <div class="row mb-3">
-                                <label
-                                    for="alamat"
-                                    class="col-md-4 col-form-label text-md-end"
-                                >{{ __('Alamat') }}</label>
+                                <label for="alamat"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Alamat') }}</label>
 
                                 <div class="col-md-6">
-                                    <textarea
-                                        id="alamat"
-                                        type="text"
-                                        class="form-control @error('alamat') is-invalid @enderror"
-                                        name="alamat"
-                                    >{{ $user->alamat }}</textarea>
+                                    <textarea id="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat">{{ $user->alamat }}</textarea>
 
                                     @error('alamat')
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -186,33 +122,27 @@
                             </div>
                             {{-- image --}}
                             <div class="row mb-3">
-                                <label
-                                    for="image"
-                                    class="col-md-4 col-form-label text-md-end"
-                                >{{ __('Foto') }}</label>
+                                <label for="image"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Foto') }}</label>
                                 <div class="col-md-6">
-                                    <div class="input-group mb-3">
+                                    @if (Auth::user()->image)
+                                        <img src="{{ asset('storage/avatars/' . Auth::user()->image) }}"
+                                            class="img-thumbnail" height="70" width="70">
+                                    @else
+                                        <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
+                                            class="img-thumbnail" height="70" width="70">
+                                    @endif
+                                    <div class="input-group my-3">
                                         <div>
                                             <input type="hidden" name="oldImage" value="{{ $user->image }}">
-                                            <input
-                                                name="image"
-                                                class="form-control @error('image') is-invalid @enderror"
-                                                value="{{ old( $user->image) }}"
-                                                type="file"
-                                                accept="image/*"
-                                                id="formFile"
-                                            >
-                                            <small
-                                                for="formFile"
-                                                class="form-label"
-                                            >Edit Foto User</small>
+                                            <input name="image" class="form-control @error('image') is-invalid @enderror"
+                                                value="{{ old($user->image) }}" type="file" accept="image/*"
+                                                id="formFile">
+                                            <small for="formFile" class="form-label">Edit Foto User</small>
                                         </div>
                                     </div>
                                     @error('image')
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                        >
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -221,10 +151,7 @@
                             {{-- Save --}}
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-dark"
-                                    >
+                                    <button type="submit" class="btn btn-dark">
                                         {{ __('Update') }}
                                     </button>
                                 </div>

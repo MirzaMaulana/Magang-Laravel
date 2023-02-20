@@ -15,14 +15,14 @@ class UserController extends Controller
     {
         return datatables()
             ->eloquent(User::query()->where('role', '!=', 'SuperAdmin')->latest())
-            
+
             ->addColumn('action', function ($user) {
                 return '
                 <div class="d-flex">
-                <form action=" ' . route('user.destroy', $user->id) . ' " method="POST">
-                <input type="hidden" name="_token" value="'. @csrf_token() .'">
+                <form onsubmit="destroy(event)" action=" ' . route('user.destroy', $user->id) . ' " method="POST">
+                <input type="hidden" name="_token" value="' . @csrf_token() . '">
                 <input type="hidden" name="_method" value="DELETE">
-                <button class="btn-danger btn btn-sm  mr-2" onclick="return confirm(\'Are you sure you want to delete this user?\')">
+                <button class="btn-danger btn btn-sm  mr-2">
                 <i class="fa fa-trash"></i>
                 </button>
                 </td>
@@ -31,20 +31,18 @@ class UserController extends Controller
                  </div>  
             ';
             })
-            ->addColumn('image', function($user) {
+            ->addColumn('image', function ($user) {
                 return $user->image
-                ? '<img src="/storage/avatars/' . $user->image . '" class="rounded-circle shadow-sm" height="30" width="30">'
-                : '<img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1" class="shadow-sm rounded-circle" height="30" width="30">';
+                    ? '<img src="/storage/avatars/' . $user->image . '" class="rounded-circle shadow-sm" height="30" width="30">'
+                    : '<img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1" class="shadow-sm rounded-circle" height="30" width="30">';
             })
-            ->editColumn('status', function($user){
+            ->editColumn('status', function ($user) {
                 return $user->status == 'Active'
-                ? '<p class="text-success fw-bold">'.$user->status.'</p>' : '<p class="text-danger fw-bold">'.$user->status.'</p>';
+                    ? '<p class="badge badge-success">' . $user->status . '</p>' : '<p class="badge badge-danger">' . $user->status . '</p>';
             })
             ->addIndexColumn()
-            ->escapeColumns(['action']) 
+            ->escapeColumns(['action'])
             ->toJson();
-           
-            
     }
 
     public function index()
@@ -53,28 +51,27 @@ class UserController extends Controller
     }
     public function destroy(User $user)
     {
-    $path = public_path('storage/avatars/' . $user->image);
-    if(File::exists($path))
-    {
-    File::delete($path);
-    }
-    $user->delete();
+        $path = public_path('storage/avatars/' . $user->image);
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+        $user->delete();
 
-    return redirect('/user')->with('success', 'User deleted successfully');
+        return redirect('/user')->with('success', 'User deleted successfully');
     }
 
-     public function edit($id)
+    public function edit($id)
     {
         $user = User::find($id);
         return view('user.edit', compact('user'));
     }
     public function update(Request $request, User $user)
-    {   
+    {
         //Validasi data update user
         $request->validate(
             [
-            'name' => ['required', 'string', 'max:255'],
-            'image' => ['image', 'max:2048']
+                'name' => ['required', 'string', 'max:255'],
+                'image' => ['image', 'max:2048']
             ]
         );
         // input data
@@ -87,12 +84,12 @@ class UserController extends Controller
         ];
         //Mengecek apakah user upload image
         if ($request->hasFile('image')) {
-          // Menginput image user
-          $filename = $request->image->getClientOriginalName();
-          $request->image->storeAs('avatars', $filename);
-          $data= ['image'=> $filename];
+            // Menginput image user
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('avatars', $filename);
+            $data = ['image' => $filename];
         }
-       
+
         //Menyimpan data update user
         $findUser = User::find($user->id);
         $findUser->update($data);

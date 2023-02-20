@@ -17,10 +17,9 @@ class status
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->status != 'Active')
-        {
+        if (Auth::user()->status != 'Active') {
             Auth::logout();
-            return redirect("/")->with('error', 'Akun Anda Telah Terblokir');
+            return redirect("/login")->with('error', 'Akun Anda Telah Terblokir');
         }
         return $next($request);
     }

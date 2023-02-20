@@ -20,8 +20,7 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Description</th>
+                                    <th>title</th>
                                     <th width="30%">Create By</th>
                                     <th width="10%">Aksi</th>
                                 </tr>
@@ -45,7 +44,7 @@
             userDatatable = $('table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('tag.list') }}",
+                ajax: "{{ route('post.list') }}",
                 order: [],
                 columns: [{
                         data: 'DT_RowIndex',
@@ -53,10 +52,7 @@
                         searchable: false
                     },
                     {
-                        data: 'name'
-                    },
-                    {
-                        data: 'description'
+                        data: 'title'
                     },
                     {
                         data: 'created_by'

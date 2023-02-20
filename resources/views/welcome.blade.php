@@ -72,12 +72,6 @@
                 </div>
             </div>
         </nav>
-         @if (session()->has('error'))
-        <div class="alert alert-danger absolute alert-dismissible fade show container" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
         <main class="habbits container d-flex justify-content-between">
             <div class="title mt-4">
                 <h1 class="fw-bold display-1 mt-5">Oops!</h1>

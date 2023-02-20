@@ -139,7 +139,9 @@
                                             <input name="image" class="form-control @error('image') is-invalid @enderror"
                                                 value="{{ old($user->image) }}" type="file" accept="image/*"
                                                 id="formFile">
-                                            <small for="formFile" class="form-label">Edit Foto User</small>
+                                            <small for="formFile" class="form-label">Edit Foto User<b
+                                                    class="text-danger">NOTE FOTO
+                                                    HARUS KOTAK</b></small>
                                         </div>
                                     </div>
                                     @error('image')

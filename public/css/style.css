@@ -1,25 +1,22 @@
+* {
+    font-family: "Nunito";
+}
 .background-profile {
-    border-radius: 20px;
     width: auto;
-    height: 200px;
-    background: rgb(92, 249, 255);
-    background-image: linear-gradient(
-        90deg,
-        rgba(92, 249, 255, 1) 0%,
-        rgb(0, 145, 255) 100%
-    );
+    border: 7px solid rgb(247, 247, 247);
+    height: 230px;
+    background-size: cover;
 }
 .card-text {
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 .profile-title {
-    font-weight: bold;
-    padding-top: 100px;
+    margin-bottom: 0;
 }
 .img-profile {
     position: absolute;
-    margin-top: -110px;
+    top: 150px;
 }
 .profile {
-    border-radius: 20px;
+    border-radius: 10px;
 }

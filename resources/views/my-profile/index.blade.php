@@ -102,7 +102,9 @@
                                         <div>
                                             <input name="image" class="form-control @error('image') is-invalid @enderror"
                                                 onchange="loadFile(event)" type="file" accept="image/*" id="formFile">
-                                            <small for="formFile" class="form-label">Silahkan Upload Foto Anda</small>
+                                            <small for="formFile" class="form-label">Silahkan Edit Foto Anda,<b
+                                                    class="text-danger">FOTO
+                                                    HARUS KOTAK</b></small>
                                         </div>
                                     </div>
                                     @error('image')

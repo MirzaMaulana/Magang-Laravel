@@ -24,6 +24,8 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required'],
+            'categories' => ['required'],
+            'tags' => ['required'],
             'image' => ['required', 'image', 'max:2048']
         ]);
 
@@ -38,8 +40,8 @@ class PostController extends Controller
         ];
 
         $post = Post::create($data);
-        $post->category()->attach($request->category);
-        $post->tag()->attach($request->tag);
+        $post->category()->attach($request->categories);
+        $post->tag()->attach($request->tags);
         return redirect('/post/list')->with('success', 'Success Create Post');
     }
 
@@ -110,6 +112,8 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required'],
+            'categories' => ['required'],
+            'tags' => ['required'],
             'image' => ['required', 'image', 'max:2048']
         ]);
 

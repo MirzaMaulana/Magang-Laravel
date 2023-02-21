@@ -64,14 +64,16 @@
                                 <label for="category"
                                     class="col-md-4 col-form-label text-md-end">{{ __('category') }}</label>
                                 <div class="col-md-6 mt-2">
-
-                                    <select class="form-control @error('category') is-invalid @enderror"
-                                        aria-label="Default select example" name="category">
+                                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                                         @foreach ($categories as $category)
-                                            <option value="{{ old('category', $category->id) }}">{{ $category->name }}
-                                            </option>
+                                            <input type="checkbox" name="categories[]" class="btn-check"
+                                                id="categories_{{ $category->id }}" autocomplete="off"
+                                                value="{{ old('category', $category->id) }}"
+                                                {{ in_array($category->id, $post->category->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                            <label class="btn btn-sm btn-outline-success"
+                                                for="categories_{{ $category->id }}">{{ $category->name }}</label>
                                         @endforeach
-                                    </select>
+                                    </div>
                                 </div>
                             </div>
                             {{-- Tag --}}
@@ -81,11 +83,11 @@
                                 <div class="col-md-6 mt-2">
                                     <div class="form-check form-check-inline">
                                         @foreach ($tags as $tag)
-                                            <input class="form-check-input mx-2" type="checkbox" name="tag"
-                                                id="inlineCheckbox1" value="{{ old('tag', $tag->id) }}"
+                                            <input class="form-check-input mx-2" type="checkbox" name="tags[]"
+                                                id="tag_{{ $tag->id }}" value="{{ old('tag', $tag->id) }}"
                                                 {{ in_array($tag->id, $post->tag->pluck('id')->toArray()) ? 'checked' : '' }}>
                                             <label class="form-check-label"
-                                                for="inlineCheckbox1">{{ $tag->name }}</label>
+                                                for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
                                         @endforeach
 
                                     </div>

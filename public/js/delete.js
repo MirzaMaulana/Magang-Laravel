@@ -5,7 +5,9 @@ function destroy(event) {
 
     $("#confirm-delete").on("click", function () {
         const confirmButton = $(this);
-        confirmButton.prop("disabled", true);
+        confirmButton
+            .html('<i class="fa fa-spinner fa-spin"></i> Deleting...')
+            .prop("disabled", true);
 
         $.ajax({
             url: event.target.action,
@@ -15,10 +17,14 @@ function destroy(event) {
             .done(function (res) {
                 userDatatable.ajax.reload();
                 $("#delete-modal").modal("hide");
-                confirmButton.prop("disabled", false);
+                confirmButton
+                    .html("Yes, delete", false)
+                    .prop("disabled", false);
             })
             .fail(function (err) {
-                confirmButton.prop("disabled", false);
+                confirmButton
+                    .html("Yes, delete", false)
+                    .prop("disabled", false);
             });
     });
 }

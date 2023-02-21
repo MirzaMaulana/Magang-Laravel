@@ -59,6 +59,38 @@
                                     <textarea id="summernote" input="content" name="content">{{ old('content', $post->content) }}</textarea>
                                 </div>
                             </div>
+                            {{-- Category --}}
+                            <div class="row mb-3">
+                                <label for="category"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('category') }}</label>
+                                <div class="col-md-6 mt-2">
+
+                                    <select class="form-control @error('category') is-invalid @enderror"
+                                        aria-label="Default select example" name="category">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ old('category', $category->id) }}">{{ $category->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- Tag --}}
+                            <div class="row mb-3">
+                                <label for="tag"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Tag') }}</label>
+                                <div class="col-md-6 mt-2">
+                                    <div class="form-check form-check-inline">
+                                        @foreach ($tags as $tag)
+                                            <input class="form-check-input mx-2" type="checkbox" name="tag"
+                                                id="inlineCheckbox1" value="{{ old('tag', $tag->id) }}"
+                                                {{ in_array($tag->id, $post->tag->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                            <label class="form-check-label"
+                                                for="inlineCheckbox1">{{ $tag->name }}</label>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
                             {{-- Save --}}
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -80,4 +112,5 @@
             height: 100
         });
     </script>
+    <script src="{{ asset('js/delete.js') }}"></script>
 @endsection

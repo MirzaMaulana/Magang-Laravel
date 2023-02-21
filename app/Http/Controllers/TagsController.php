@@ -21,7 +21,6 @@ class TagsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'max:255'],
-            'description' => ['required', 'max:255']
         ]);
 
         $data = [
@@ -85,7 +84,6 @@ class TagsController extends Controller
         //Validasi data update tag
         $request->validate([
             'name' => ['required', 'max:255'],
-            'description' => ['required', 'max:255']
         ]);
 
         $data = [

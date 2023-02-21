@@ -20,4 +20,8 @@ class Category extends Model
     protected $attributes = [
         'created_by' => ''
     ];
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, 'post_category', 'category_id', 'post_id');
+    }
 }

@@ -21,4 +21,8 @@ class Tags extends Model
     protected $attributes = [
         'created_by' => ''
     ];
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, "post_tag", "tag_id ", "post_id");
+    }
 }

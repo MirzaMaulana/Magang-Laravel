@@ -21,4 +21,12 @@ class Post extends Model
     protected $attributes = [
         'image' => ''
     ];
+    public function category()
+    {
+        return $this->belongsToMany(Category::class, "post_category",  "post_id", "categories_id");
+    }
+    public function tag()
+    {
+        return $this->belongsToMany(Tags::class, "post_tag", "post_id", "tag_id");
+    }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -11,7 +13,10 @@ class PostController extends Controller
 {
     public function create()
     {
-        return view('post.create');
+        return view('post.create', [
+            "categories" => Category::all(),
+            "tags" => Tags::all()
+        ]);
     }
 
     public function store(Request $request)
@@ -33,7 +38,8 @@ class PostController extends Controller
         ];
 
         $post = Post::create($data);
-
+        $post->category()->attach($request->category);
+        $post->tag()->attach($request->tag);
         return redirect('/post/list')->with('success', 'Success Create Post');
     }
 
@@ -80,6 +86,9 @@ class PostController extends Controller
         if (File::exists($path)) {
             File::delete($path);
         }
+        // hapus entri di tabel pivot untuk kategori dan tag
+        $post->category()->detach();
+        $post->tag()->detach();
         $post->delete();
 
         return redirect()->back();
@@ -89,7 +98,10 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('post.edit', compact('post'));
+        return view('post.edit', [
+            "categories" => Category::all(),
+            "tags" => Tags::all()
+        ], compact('post'));
     }
 
     // Update post
@@ -113,8 +125,9 @@ class PostController extends Controller
 
 
         //Menyimpan data update post
-        $findpost = Post::find($post->id);
-        $findpost->update($data);
+        $post->update($data);
+        $post->category()->sync($request->category);
+        $post->tag()->sync($request->tag);
         //mengembalikan ke halaman ketika user berhasil update
         return redirect('/post/list')->with('success', 'User updated successfully');
     }

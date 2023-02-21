@@ -30,7 +30,7 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-home"></i>
                         <p>
@@ -38,7 +38,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview">
+                <li class="nav-item has-treeview {{ Request::is('tag*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Request::is('tag*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tags"></i>
                         <p>
@@ -48,13 +48,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('tag.create') }}" class="nav-link">
+                            <a href="{{ route('tag.create') }}"
+                                class="nav-link {{ Request::is('tag/create') ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-file-signature"></i>
                                 <p>Create</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('tag.index') }}" class="nav-link">
+                            <a href="{{ route('tag.index') }}"
+                                class="nav-link {{ Request::is('tag/list') ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-list-ol"></i>
                                 <p>List Tags</p>
                             </a>
@@ -62,7 +64,7 @@
                     </ul>
                 </li>
                 {{-- Category --}}
-                <li class="nav-item has-treeview">
+                <li class="nav-item has-treeview  {{ Request::is('category*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Request::is('category*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-layer-group"></i>
                         <p>
@@ -72,13 +74,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('category.create') }}" class="nav-link">
+                            <a href="{{ route('category.create') }}"
+                                class="nav-link {{ Request::is('category/create') ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-file-signature"></i>
                                 <p>Create</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('category.index') }}" class="nav-link">
+                            <a href="{{ route('category.index') }}"
+                                class="nav-link {{ Request::is('category/list') ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-list-ol"></i>
                                 <p>List Category</p>
                             </a>
@@ -86,7 +90,7 @@
                     </ul>
                 </li>
                 {{-- Post --}}
-                <li class="nav-item has-treeview">
+                <li class="nav-item has-treeview  {{ Request::is('post*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Request::is('post*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-paste"></i>
                         <p>
@@ -96,13 +100,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('post.create') }}" class="nav-link">
+                            <a href="{{ route('post.create') }}"
+                                class="nav-link {{ Request::is('post/create') ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-file-signature"></i>
                                 <p>Create</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('post.index') }}" class="nav-link">
+                            <a href="{{ route('post.index') }}"
+                                class="nav-link {{ Request::is('post/list') ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-list-ol"></i>
                                 <p>List Posts</p>
                             </a>

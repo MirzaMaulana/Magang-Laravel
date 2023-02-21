@@ -17,7 +17,6 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => ['required', 'max:255'],
-            'description' => ['required', 'max:255']
         ]);
 
 
@@ -82,7 +81,6 @@ class CategoryController extends Controller
         //Validasi data update category
         $request->validate([
             'name' => ['required', 'max:255'],
-            'description' => ['required', 'max:255']
         ]);
 
         $data = [

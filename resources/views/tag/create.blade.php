@@ -15,7 +15,8 @@
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
-                                        class="form-control @error('name') is-invalid @enderror" name="name">
+                                        class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                                        name="name">
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -31,7 +32,7 @@
 
                                 <div class="col-md-6">
                                     <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror"
-                                        name="description" placeholder="description tag"></textarea>
+                                        name="description" value="{{ old('description') }}" placeholder="description tag"></textarea>
 
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">

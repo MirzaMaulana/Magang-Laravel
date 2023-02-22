@@ -111,9 +111,9 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'content' => ['required'],
             'categories' => ['required'],
             'tags' => ['required'],
+            'content' => ['required'],
             'image' => ['required', 'image', 'max:2048']
         ]);
 
@@ -129,9 +129,10 @@ class PostController extends Controller
 
 
         //Menyimpan data update post
+        $post->category()->sync($request->categories);
+        $post->tag()->sync($request->tags);
         $post->update($data);
-        $post->category()->sync($request->category);
-        $post->tag()->sync($request->tag);
+
         //mengembalikan ke halaman ketika user berhasil update
         return redirect('/post/list')->with('success', 'User updated successfully');
     }

@@ -8,6 +8,7 @@ use App\Models\Tags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostController extends Controller
 {
@@ -23,6 +24,7 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required'],
             'content' => ['required'],
             'categories' => ['required'],
             'tags' => ['required'],
@@ -114,21 +116,19 @@ class PostController extends Controller
             'categories' => ['required'],
             'tags' => ['required'],
             'content' => ['required'],
-            'image' => ['image', 'max:2048']
+            'image' => ['required', 'image', 'max:2048']
         ]);
 
+        // Menginput image user
+        $filename = $request->image->getClientOriginalName();
+        $request->image->storeAs('posts', $filename);
         $data = [
             'title' => $request->title,
+            'slug' => $request->slug,
+            'image' => $filename,
             'content' => $request->content,
             'created_by' => auth()->user()->name
         ];
-        //Mengecek apakah user upload image
-        if ($request->hasFile('image')) {
-            // Menginput image user
-            $filename = $request->image->getClientOriginalName();
-            $request->image->storeAs('posts', $filename);
-            $data = ['image' => $filename];
-        }
 
         //Menyimpan data update post
         $post->category()->sync($request->categories);
@@ -137,5 +137,10 @@ class PostController extends Controller
 
         //mengembalikan ke halaman ketika user berhasil update
         return redirect('/post/list')->with('success', 'User updated successfully');
+    }
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+        return response()->json(['slug' => $slug]);
     }
 }

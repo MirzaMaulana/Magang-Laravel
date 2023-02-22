@@ -27,6 +27,23 @@
                                     @enderror
                                 </div>
                             </div>
+                            {{-- slug --}}
+                            <div class="row mb-3">
+                                <label for="slug"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('slug') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="slug" type="text"
+                                        class="form-control @error('slug') is-invalid @enderror"
+                                        value="{{ old('slug', $post->slug) }}" name="slug" readonly>
+
+                                    @error('slug')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             {{-- Images --}}
                             <div class="row mb-3">
                                 <label for="image"
@@ -76,7 +93,9 @@
                                                 for="categories_{{ $category->id }}">{{ $category->name }}</label>
                                         </div>
                                     @endforeach
-
+                                    @error('categories')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- Tag --}}
@@ -92,8 +111,10 @@
                                             <label class="form-check-label"
                                                 for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
                                         @endforeach
-
                                     </div>
+                                    @error('tags')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- Save --}}
@@ -115,6 +136,24 @@
             placeholder: 'Hello Bootstrap 4',
             tabsize: 2,
             height: 100
+        });
+    </script>
+    <script>
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                .replace(/^-+/, '') // Trim - from start of text
+                .replace(/-+$/, ''); // Trim - from end of text
+        }
+
+        const title = document.querySelector('#title');
+        const slug = document.querySelector('#slug');
+
+        title.addEventListener('input', function() {
+            const slugValue = slugify(title.value);
+            slug.value = slugValue;
         });
     </script>
     <script src="{{ asset('js/delete.js') }}"></script>

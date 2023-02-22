@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <form action="{{ route('post.input') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            {{-- Name --}}
+                            {{-- title --}}
                             <div class="row mb-3">
                                 <label for="title"
                                     class="col-md-4 col-form-label text-md-end">{{ __('title') }}</label>
@@ -20,6 +20,23 @@
                                         value="{{ old('title') }}" name="title">
 
                                     @error('title')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            {{-- slug --}}
+                            <div class="row mb-3">
+                                <label for="slug"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('slug') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="slug" type="text"
+                                        class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug') }}"
+                                        name="slug" readonly>
+
+                                    @error('slug')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -48,16 +65,16 @@
                             <div class="row mb-3">
                                 <label for="content"
                                     class="col-md-4 col-form-label text-md-end">{{ __('content') }}</label>
-                                @error('content')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                                 <div class="col-md-6">
                                     <input id="content" type="hidden"
                                         class="form-control @error('content') is-invalid @enderror" name="content"
                                         value="" autocomplete="off" autofocus>
                                     <textarea id="summernote" input="content" name="content" value="{{ old('description') }}"></textarea>
+                                    @error('content')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- Category --}}
@@ -65,7 +82,6 @@
                                 <label for="category"
                                     class="col-md-4 col-form-label text-md-end">{{ __('category') }}</label>
                                 <div class="col-md-6 mt-2">
-
                                     @foreach ($categories as $category)
                                         <div class="btn-group form-check-inline" role="group"
                                             aria-label="Basic checkbox toggle button group">
@@ -76,7 +92,9 @@
                                                 for="categories_{{ $category->id }}">{{ $category->name }}</label>
                                         </div>
                                     @endforeach
-
+                                    @error('categories')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- Tag --}}
@@ -91,8 +109,10 @@
                                             <label class="form-check-label"
                                                 for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
                                         @endforeach
-
                                     </div>
+                                    @error('tags')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- Save --}}
@@ -117,4 +137,22 @@
         });
     </script>
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script>
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                .replace(/^-+/, '') // Trim - from start of text
+                .replace(/-+$/, ''); // Trim - from end of text
+        }
+
+        const title = document.querySelector('#title');
+        const slug = document.querySelector('#slug');
+
+        title.addEventListener('input', function() {
+            const slugValue = slugify(title.value);
+            slug.value = slugValue;
+        });
+    </script>
 @endsection

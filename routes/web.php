@@ -80,6 +80,8 @@ Route::prefix('category')->middleware('auth')->group(function () {
     });
 })->name('category');
 
+Route::get('/posts/checkSlug', [PostController::class, 'checkSlug']);
+
 Route::prefix('post')->middleware('auth')->group(function () {
     Route::controller(PostController::class)->group(function () {
         Route::get('/create', 'create')->name('post.create');

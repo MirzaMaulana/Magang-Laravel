@@ -114,19 +114,21 @@ class PostController extends Controller
             'categories' => ['required'],
             'tags' => ['required'],
             'content' => ['required'],
-            'image' => ['required', 'image', 'max:2048']
+            'image' => ['image', 'max:2048']
         ]);
 
-        // Menginput image user
-        $filename = $request->image->getClientOriginalName();
-        $request->image->storeAs('posts', $filename);
         $data = [
             'title' => $request->title,
-            'image' => $filename,
             'content' => $request->content,
             'created_by' => auth()->user()->name
         ];
-
+        //Mengecek apakah user upload image
+        if ($request->hasFile('image')) {
+            // Menginput image user
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('posts', $filename);
+            $data = ['image' => $filename];
+        }
 
         //Menyimpan data update post
         $post->category()->sync($request->categories);

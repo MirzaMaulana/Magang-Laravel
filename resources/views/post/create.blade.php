@@ -65,15 +65,18 @@
                                 <label for="category"
                                     class="col-md-4 col-form-label text-md-end">{{ __('category') }}</label>
                                 <div class="col-md-6 mt-2">
-                                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                        @foreach ($categories as $category)
+
+                                    @foreach ($categories as $category)
+                                        <div class="btn-group form-check-inline" role="group"
+                                            aria-label="Basic checkbox toggle button group">
                                             <input type="checkbox" name="categories[]" class="btn-check"
                                                 id="categories_{{ $category->id }}" autocomplete="off"
                                                 value="{{ old('category', $category->id) }}">
-                                            <label class="btn btn-sm btn-outline-success"
+                                            <label class="btn btn-sm btn-outline-success me-1"
                                                 for="categories_{{ $category->id }}">{{ $category->name }}</label>
-                                        @endforeach
-                                    </div>
+                                        </div>
+                                    @endforeach
+
                                 </div>
                             </div>
                             {{-- Tag --}}

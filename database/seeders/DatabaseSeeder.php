@@ -27,36 +27,43 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Category::factory()->create([
             'name' => 'Web Programming',
-            'created_by' => 'Mamang Moonton',
         ]);
         \App\Models\Category::factory()->create([
             'name' => 'Web Design',
-            'created_by' => 'Mamang Moonton',
         ]);
         \App\Models\Category::factory()->create([
             'name' => 'UI/UX',
-            'created_by' => 'Mamang Moonton',
         ]);
         \App\Models\Category::factory()->create([
             'name' => 'Android Devoloper',
-            'created_by' => 'Mamang Moonton',
+        ]);
+        \App\Models\Category::factory()->create([
+            'name' => 'Front End Devoloper',
+        ]);
+        \App\Models\Category::factory()->create([
+            'name' => 'Game Devoloper',
+        ]);
+        \App\Models\Category::factory()->create([
+            'name' => 'Personal',
         ]);
 
         \App\Models\Tags::factory()->create([
             'name' => 'Programming',
-            'created_by' => 'Mamang Moonton',
         ]);
         \App\Models\Tags::factory()->create([
             'name' => 'Design',
-            'created_by' => 'Mamang Moonton',
         ]);
         \App\Models\Tags::factory()->create([
             'name' => 'UI/UX',
-            'created_by' => 'Mamang Moonton',
         ]);
         \App\Models\Tags::factory()->create([
             'name' => 'Game',
-            'created_by' => 'Mamang Moonton',
+        ]);
+        \App\Models\Tags::factory()->create([
+            'name' => 'Web',
+        ]);
+        \App\Models\Tags::factory()->create([
+            'name' => 'Negara',
         ]);
     }
 }

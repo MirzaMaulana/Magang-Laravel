@@ -113,6 +113,7 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
+            'slug' => ['unique:posts'],
             'categories' => ['required'],
             'tags' => ['required'],
             'content' => ['required'],

@@ -21,6 +21,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>title</th>
+                                    <th>slug</th>
                                     <th width="30%">Create By</th>
                                     <th width="10%">Aksi</th>
                                 </tr>
@@ -53,6 +54,9 @@
                     },
                     {
                         data: 'title'
+                    },
+                    {
+                        data: 'slug'
                     },
                     {
                         data: 'created_by'

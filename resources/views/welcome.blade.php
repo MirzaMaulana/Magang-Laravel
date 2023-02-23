@@ -9,7 +9,7 @@
         </div>
     </div>
     {{-- Carousel --}}
-    <div id="carouselExampleCaptions" class="mt-4 carousel slide" data-bs-ride="false">
+    <div id="carouselExampleCaptions" class="mt-4 carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-inner">
                 @foreach ($posts as $post)
@@ -56,7 +56,15 @@
                 @if ($post->is_pinned != 1)
                     <div class="col-md-4 mb-3">
                         <div class="card">
-                            <img src="{{ asset('storage/posts/' . $post->image) }}" class="card-img-top" alt="">
+                            <img src="{{ asset('storage/posts/' . $post->image) }}" height="200" class="card-img-top"
+                                alt="">
+                            <small id="tags" class="position-absolute ms-2 text-light">
+                                @foreach ($post->tag as $tags)
+                                    <p class="mt-2 d-inline-block">
+                                        #{{ $tags->name }}
+                                    </p>
+                                @endforeach
+                            </small>
                             <div class="card-body">
                                 <small class="text-muted">
                                     <p><a href="" class="text-decoration-none text-dark">{{ $post->created_by }}</a>
@@ -64,7 +72,8 @@
                                     </p>
                                 </small>
                                 <h5 class="card-title d-flex justify-content-between">
-                                    <a href="" class="text-decoration-none text-dark">{{ $post->title }}</a>
+                                    <a href="{{ route('post.show', $post->slug) }}"
+                                        class="text-decoration-none text-dark">{{ $post->title }}</a>
                                     <i class="bi bi-arrow-up-right-circle absolute"></i>
                                 </h5>
                                 <p class="card-text">{{ Str::limit(strip_tags($post->content), 80, '...') }}</p>
@@ -72,7 +81,7 @@
                                     More</a> --}}
                                 @foreach ($post->category as $category)
                                     <small class="text-muted">
-                                        <a href=""class="text-decoration-none p-1 rounded-4 text-dark"
+                                        <a href=""class="text-decoration-none me-1 p-1 px-2 rounded-4 text-dark"
                                             style="border:1px solid black">{{ $category->name }}</a>
                                     </small>
                                 @endforeach

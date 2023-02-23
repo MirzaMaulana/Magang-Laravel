@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="#" style="font-family: Roboto Slab">
             <img src="https://th.bing.com/th/id/OIP.D2b5o5AIYbd0pkt0O73mAQHaHa?pid=ImgDet&w=640&h=640&rs=1" width="30"
@@ -15,8 +15,8 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mt-1 me-auto">
-                <li class="nav-item active">
+            <ul class="navbar-nav mt-1 mx-auto">
+                <li class="nav-item active" style="margin-left: 100px">
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">

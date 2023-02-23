@@ -20,6 +20,7 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>No</th>
+                                    <th>Pin</th>
                                     <th>title</th>
                                     <th>slug</th>
                                     <th width="30%">Create By</th>
@@ -51,6 +52,9 @@
                         data: 'DT_RowIndex',
                         sortable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'is_pinned'
                     },
                     {
                         data: 'title'

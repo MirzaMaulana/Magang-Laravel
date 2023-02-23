@@ -44,6 +44,30 @@
                                     @enderror
                                 </div>
                             </div>
+                            {{-- ispinned  --}}
+                            <div class="row mb-3">
+                                <label for="is_pinned"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Pin') }}</label>
+
+                                <div class="col-md-6">
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" name="is_pinned" id="is_pinned1"
+                                            value="1" {{ $post->is_pinned == 1 ? 'checked' : '' }} autocomplete="off">
+                                        <label class="btn btn-outline-success me-2" for="is_pinned1">Pinned</label>
+
+                                        <input type="radio" class="btn-check" name="is_pinned" id="is_pinned2"
+                                            value="0" {{ $post->is_pinned == 0 ? 'checked' : '' }} autocomplete="off">
+                                        <label class="btn btn-outline-warning" for="is_pinned2">No Pin</label>
+
+                                    </div>
+
+                                    @error('is_pinned')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             {{-- Images --}}
                             <div class="row mb-3">
                                 <label for="image"
@@ -131,22 +155,23 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/submit.js') }}"></script>
     <script>
         $('#summernote').summernote({
-            placeholder: 'Hello Bootstrap 4',
+            placeholder: 'Content',
             tabsize: 2,
             height: 100
         });
     </script>
     <script>
-        // function slugify(text) {
-        //     return text.toString().toLowerCase()
-        //         .replace(/\s+/g, '-') // Replace spaces with -
-        //         .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-        //         .replace(/\-\-+/g, '-') // Replace multiple - with single -
-        //         .replace(/^-+/, '') // Trim - from start of text
-        //         .replace(/-+$/, ''); // Trim - from end of text
-        // }
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                .replace(/^-+/, '') // Trim - from start of text
+                .replace(/-+$/, ''); // Trim - from end of text
+        }
 
         const title = document.querySelector('#title');
         const slug = document.querySelector('#slug');
@@ -160,10 +185,10 @@
         document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault();
         })
-        // title.addEventListener('input', function() {
-        //     const slugValue = slugify(title.value);
-        //     slug.value = slugValue;
-        // });
+        title.addEventListener('input', function() {
+            const slugValue = slugify(title.value);
+            slug.value = slugValue;
+        });
     </script>
     <script src="{{ asset('js/delete.js') }}"></script>
 @endsection

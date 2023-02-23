@@ -7,7 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MyProfileController;
 
@@ -22,13 +22,14 @@ use App\Http\Controllers\MyProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('guest');
-
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('Active')->name('home');
+
+
+Route::get('/', [ViewController::class, 'index'])->name('welcome');
+
+Route::get('/posts/{post:slug}', [ViewController::class, 'show'])->name('post.show');
 
 // Route::get('/update', [UserController::class, 'edit']);
 

@@ -1,0 +1,13 @@
+* {
+    font-family: "Tilt Neon", sans-serif;
+}
+.card {
+    overflow: hidden;
+}
+.card-img-top {
+    transition: all 0.3s ease;
+}
+.card-img-top:hover {
+    transform: scale(1.01);
+    filter: brightness(70%);
+}

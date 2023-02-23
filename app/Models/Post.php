@@ -17,11 +17,13 @@ class Post extends Model
         'slug',
         'image',
         'content',
+        'is_pinned',
         'created_by',
     ];
 
     protected $attributes = [
-        'image' => ''
+        'image' => '',
+        'is_pinned' => ''
     ];
     public function category()
     {

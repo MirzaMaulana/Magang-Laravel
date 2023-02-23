@@ -43,7 +43,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                             {{-- Images --}}
                             <div class="row mb-3">
                                 <label for="image"

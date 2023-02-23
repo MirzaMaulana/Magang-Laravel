@@ -1,86 +1,86 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-
-        <style>
-            body {
-                font-family: 'ubuntu', sans-serif;
-            }
-        </style>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+@extends('index.app')
+@section('content')
+    {{-- jumbotron --}}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <p class="lead fw-bold" style="margin-bottom: 0">The Blog</p>
+            <h1 class="display-4">Writing From Our Team</h1>
+            <p style="font-family: Roboto Slab">The latest industry news, interviews, tecnologies, and resource</p>
+        </div>
+    </div>
+    {{-- Carousel --}}
+    <div id="carouselExampleCaptions" class="mt-4 carousel slide" data-bs-ride="false">
+        <div class="carousel-inner">
+            <div class="carousel-inner">
+                @foreach ($posts as $post)
+                    @if ($post->is_pinned === 1)
+                        <a href="{{ route('post.show', $post->slug) }}">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('storage/posts/' . $post->image) }}" class="d-block w-100" alt="..."
+                                    height="500" style="filter: brightness(70%)">
+                                <div class="carousel-caption text-start d-none d-md-block">
+                                    <small class="text-light">
+                                        <b><a href=""
+                                                class="text-decoration-none text-light">{{ $post->created_by }}</a>
+                                            <b>· {{ $post->created_at->format('d F Y') }}</b>
+                                        </b>
+                                    </small>
+                                    <h5>{{ $post->title }}</h5>
+                                    <p>{{ Str::limit(strip_tags($post->content), 70, '...') }}</p>
+                                    @foreach ($post->category as $category)
+                                        <small class="text-muted">
+                                            <a href=""class="text-decoration-none p-1 px-2 rounded-4 text-light"
+                                                style="border:1px solid white">{{ $category->name }}</a>
+                                        </small>
+                                    @endforeach
                                 </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+                            </div>
+                        </a>
+                    @endif
+                @endforeach
             </div>
-        </nav>
-        <main class="habbits container d-flex justify-content-between">
-            <div class="title mt-4">
-                <h1 class="fw-bold display-1 mt-5">Oops!</h1>
-                <h1 class="fw-bold mb-4">We're Launching Soon</h1>
-                <p>Lorem ipsum dolor sit amet consectetur <br>
-                 adipisicing elit. Et earum corporis dignissimos neque, aliquam a!</p>
-                <button class="btn btn-large btn-primary px-5 fw-bold rounded-3">Sign Up</button>
-            </div>
-            <img src="/main.png" alt="" class="mt-5" width="650">
-        </main>
-    </body>
-</html>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    {{-- post --}}
+    <div class="container mt-4">
+        <div class="row">
+            @foreach ($posts as $post)
+                @if ($post->is_pinned != 1)
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="{{ asset('storage/posts/' . $post->image) }}" class="card-img-top" alt="">
+                            <div class="card-body">
+                                <small class="text-muted">
+                                    <p><a href="" class="text-decoration-none text-dark">{{ $post->created_by }}</a>
+                                        <b>· {{ $post->created_at->format('d F Y') }}</b>
+                                    </p>
+                                </small>
+                                <h5 class="card-title d-flex justify-content-between">
+                                    <a href="" class="text-decoration-none text-dark">{{ $post->title }}</a>
+                                    <i class="bi bi-arrow-up-right-circle absolute"></i>
+                                </h5>
+                                <p class="card-text">{{ Str::limit(strip_tags($post->content), 80, '...') }}</p>
+                                {{-- <a href="{{ route('post.show', $post->slug) }}" class="btn btn-outline-success">Read
+                                    More</a> --}}
+                                @foreach ($post->category as $category)
+                                    <small class="text-muted">
+                                        <a href=""class="text-decoration-none p-1 rounded-4 text-dark"
+                                            style="border:1px solid black">{{ $category->name }}</a>
+                                    </small>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+@endsection

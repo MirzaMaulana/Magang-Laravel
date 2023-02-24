@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mt-1 mx-auto">
-                <li class="nav-item active" style="margin-left: 100px">
+                <li class="nav-item active" style="margin-left: 90px">
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">

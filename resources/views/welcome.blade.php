@@ -25,7 +25,7 @@
                                             <b>· {{ $post->created_at->format('d F Y') }}</b>
                                         </b>
                                     </small>
-                                    <h5>{{ $post->title }}</h5>
+                                    <h2>{{ $post->title }}</h2>
                                     <p>{{ Str::limit(strip_tags($post->content), 70, '...') }}</p>
                                     @foreach ($post->category as $category)
                                         <small class="text-muted">
@@ -92,4 +92,5 @@
             @endforeach
         </div>
     </div>
+    <div>{{ $posts->links() }}</div>
 @endsection

@@ -7,7 +7,19 @@
 .card-img-top {
     transition: all 0.3s ease;
 }
+.post-img {
+    height: 400px;
+    width: fit-content;
+    transition: all 0.5s ease;
+}
 .card-img-top:hover {
+    transform: scale(1.01);
+    filter: brightness(70%);
+}
+.post {
+    overflow: hidden;
+}
+.post-img:hover {
     transform: scale(1.01);
     filter: brightness(70%);
 }

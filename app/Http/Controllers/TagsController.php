@@ -70,7 +70,7 @@ class TagsController extends Controller
     {
         $tag->delete();
 
-        return redirect('/tag/list')->with('success', 'Tags deleted successfully');
+        return response()->json(['success' => 'Post has been Deleted!']);
     }
 
     public function edit($id)

@@ -12,7 +12,7 @@
                             {{-- title --}}
                             <div class="row mb-3">
                                 <label for="title"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('title') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Title') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="title" type="text"
@@ -29,7 +29,7 @@
                             {{-- slug --}}
                             <div class="row mb-3">
                                 <label for="slug"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('slug') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Slug') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="slug" type="text"
@@ -46,9 +46,11 @@
                             {{-- Images --}}
                             <div class="row mb-3">
                                 <label for="image"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('image') }}</label>
+                                    class="col-md-4 col-form-label mt-4 text-md-end">{{ __('Image') }}</label>
 
                                 <div class="col-md-6">
+                                    <img id="post" src="" class="mx-2" onchange="loadFile(event)"
+                                        width="100">
                                     <input id="image" type="file"
                                         class="form-control @error('image') is-invalid @enderror" name="image">
 
@@ -63,7 +65,7 @@
                             {{-- Content --}}
                             <div class="row mb-3">
                                 <label for="content"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('content') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Content') }}</label>
                                 <div class="col-md-6">
                                     <input id="content" type="hidden"
                                         class="form-control @error('content') is-invalid @enderror" name="content"
@@ -79,7 +81,7 @@
                             {{-- Category --}}
                             <div class="row mb-3">
                                 <label for="category"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('category') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Categories') }}</label>
                                 <div class="col-md-6 mt-2">
                                     @foreach ($categories as $category)
                                         <div class="btn-group form-check-inline" role="group"
@@ -99,16 +101,19 @@
                             {{-- Tag --}}
                             <div class="row mb-3">
                                 <label for="tag"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Tag') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Tags') }}</label>
                                 <div class="col-md-6 mt-2">
-                                    <div class="form-check form-check-inline">
-                                        @foreach ($tags as $tag)
+
+                                    @foreach ($tags as $tag)
+                                        <div class="form-check form-check-inline" role="group"
+                                            aria-label="Basic checkbox toggle button group">
                                             <input class="form-check-input mx-2" type="checkbox" name="tags[]"
                                                 id="tag_{{ $tag->id }}" value="{{ $tag->id }}">
                                             <label class="form-check-label"
-                                                for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
-                                        @endforeach
-                                    </div>
+                                                for="tag_{{ $tag->id }}">#{{ $tag->name }}</label>
+                                        </div>
+                                    @endforeach
+
                                     @error('tags')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -164,5 +169,9 @@
             const slugValue = slugify(title.value);
             slug.value = slugValue;
         });
+        let loadFile = function(event) {
+            var image = document.getElementById('post');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
     </script>
 @endsection

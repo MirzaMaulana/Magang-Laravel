@@ -23,3 +23,9 @@
     transform: scale(1.01);
     filter: brightness(70%);
 }
+.post-card {
+    transition: all 0.3s ease;
+}
+.post-card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

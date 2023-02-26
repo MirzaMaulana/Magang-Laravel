@@ -55,10 +55,11 @@ class UserController extends Controller
         if (File::exists($path)) {
             File::delete($path);
         }
-        $user->delete();
 
-        return redirect('/user')->with('success', 'User deleted successfully');
+        $user->delete();
+        return response()->json(['success' => 'User has been deleted.']);
     }
+
 
     public function edit($id)
     {

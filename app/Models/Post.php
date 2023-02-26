@@ -25,6 +25,21 @@ class Post extends Model
         'image' => '',
         'is_pinned' => ''
     ];
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when(isset($filters['category']), function ($query) use ($filters) {
+            $query->whereHas('category', function ($query) use ($filters) {
+                $query->where('name', $filters['category']);
+            });
+        });
+
+        $query->when(isset($filters['tag']), function ($query) use ($filters) {
+            $query->whereHas('tag', function ($query) use ($filters) {
+                $query->where('name', $filters['tag']);
+            });
+        });
+    }
     public function category()
     {
         return $this->belongsToMany(Category::class, "post_category",  "post_id", "categories_id");

@@ -128,7 +128,7 @@
 
                                     <div class="input-group">
                                         @if ($user->image)
-                                            <img src="{{ asset('storage/avatars/' . $user->image) }}"
+                                            <img id="profile" src="{{ asset('storage/avatars/' . $user->image) }}"
                                                 class="img-thumbnail mx-2" height="70" width="70">
                                         @else
                                             <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"

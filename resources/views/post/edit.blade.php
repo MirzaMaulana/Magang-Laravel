@@ -30,7 +30,7 @@
                             {{-- slug --}}
                             <div class="row mb-3">
                                 <label for="slug"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('slug') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Slug') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="slug" type="text"
@@ -52,12 +52,15 @@
                                 <div class="col-md-6">
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                         <input type="radio" class="btn-check" name="is_pinned" id="is_pinned1"
-                                            value="1" {{ $post->is_pinned == 1 ? 'checked' : '' }} autocomplete="off">
-                                        <label class="btn btn-outline-success me-2" for="is_pinned1">Pinned</label>
+                                            value="1" value="{{ old('is_pinned', $post->is_pinned) }}"
+                                            {{ $post->is_pinned == 1 ? 'checked' : '' }} autocomplete="off">
+                                        <label class="btn rounded-4 btn-outline-success me-2"
+                                            for="is_pinned1">Pinned</label>
 
                                         <input type="radio" class="btn-check" name="is_pinned" id="is_pinned2"
-                                            value="0" {{ $post->is_pinned == 0 ? 'checked' : '' }} autocomplete="off">
-                                        <label class="btn btn-outline-warning" for="is_pinned2">No Pin</label>
+                                            value="0" value="{{ old('is_pinned', $post->is_pinned) }}"
+                                            {{ $post->is_pinned == 0 ? 'checked' : '' }} autocomplete="off">
+                                        <label class="btn rounded-4 btn-outline-warning" for="is_pinned2">No Pin</label>
 
                                     </div>
 
@@ -71,23 +74,28 @@
                             {{-- Images --}}
                             <div class="row mb-3">
                                 <label for="image"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('image') }}</label>
+                                    class="col-md-4 col-form-label mt-4 text-md-end">{{ __('Image') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="image" type="file"
-                                        class="form-control @error('image') is-invalid @enderror" name="image">
-
-                                    @error('image')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <div class="input-group">
+                                        <input id="image" type="file" onchange="loadFile(event)"
+                                            class="form-control mt-3 @error('image') is-invalid @enderror" name="image">
+                                        @if ($post->image)
+                                            <img id="post" src="{{ asset('storage/posts/' . $post->image) }}"
+                                                class="img-thumbnail mx-2" width="100">
+                                        @endif
+                                        @error('image')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             {{-- Content --}}
                             <div class="row mb-3">
                                 <label for="content"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('content') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Content') }}</label>
                                 @error('content')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -103,7 +111,7 @@
                             {{-- Category --}}
                             <div class="row mb-3">
                                 <label for="category"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('category') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Categories') }}</label>
                                 <div class="col-md-6 mt-2">
 
                                     @foreach ($categories as $category)
@@ -113,7 +121,7 @@
                                                 id="categories_{{ $category->id }}" autocomplete="off"
                                                 value="{{ old('category', $category->id) }}"
                                                 {{ in_array($category->id, $post->category->pluck('id')->toArray()) ? 'checked' : '' }}>
-                                            <label class="btn btn-sm btn-outline-success"
+                                            <label class="btn btn-sm rounded-3 btn-outline-success"
                                                 for="categories_{{ $category->id }}">{{ $category->name }}</label>
                                         </div>
                                     @endforeach
@@ -125,17 +133,19 @@
                             {{-- Tag --}}
                             <div class="row mb-3">
                                 <label for="tag"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Tag') }}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Tags') }}</label>
                                 <div class="col-md-6 mt-2">
-                                    <div class="form-check form-check-inline">
-                                        @foreach ($tags as $tag)
+
+                                    @foreach ($tags as $tag)
+                                        <div class="form-check form-check-inline">
                                             <input class="form-check-input mx-2" type="checkbox" name="tags[]"
                                                 id="tag_{{ $tag->id }}" value="{{ old('tag', $tag->id) }}"
                                                 {{ in_array($tag->id, $post->tag->pluck('id')->toArray()) ? 'checked' : '' }}>
                                             <label class="form-check-label"
-                                                for="tag_{{ $tag->id }}">{{ $tag->name }}</label>
-                                        @endforeach
-                                    </div>
+                                                for="tag_{{ $tag->id }}">#{{ $tag->name }}</label>
+                                        </div>
+                                    @endforeach
+
                                     @error('tags')
                                         <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -189,6 +199,11 @@
             const slugValue = slugify(title.value);
             slug.value = slugValue;
         });
+        let loadFile = function(event) {
+            var image = document.getElementById('post');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
     </script>
+
     <script src="{{ asset('js/delete.js') }}"></script>
 @endsection

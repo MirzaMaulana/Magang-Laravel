@@ -67,7 +67,7 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect('/category/list')->with('success', 'Category deleted successfully');
+        return response()->json(['success' => 'Post has been Deleted!']);
     }
 
     public function edit($id)

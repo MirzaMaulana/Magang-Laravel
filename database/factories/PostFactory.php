@@ -18,12 +18,12 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            // 'title' => $this->faker->sentence(5),
-            // 'slug' => Str::slug($this->faker->sentence(5)),
-            // 'image' => $this->faker->imageUrl(),
-            // 'is_pinned' => $this->faker->boolean(),
-            // 'content' => $this->faker->paragraphs(3, true),
-            // 'created_by' => $this->faker->name(),
+            'title' => $this->faker->sentence(5),
+            'slug' => Str::slug($this->faker->sentence(5)),
+            'image' => $this->faker->image('public/storage/posts', 1200, 400, null, false),
+            'is_pinned' => 0,
+            'content' => $this->faker->paragraphs(3, true),
+            'created_by' => $this->faker->name(),
         ];
     }
 }

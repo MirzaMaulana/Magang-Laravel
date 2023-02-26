@@ -12,11 +12,11 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="shortcut icon"
         href="https://th.bing.com/th/id/R.6a3be7a14421b455fd2992a009f510d5?rik=V7GsriayJZF7qg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fcoder-png-coder-coding-computer-developer-encoder-engineer-programmer-icon-512.png&ehk=IwYpx%2bWn%2fTCk8nxjcNysD6EX175ypYlXItQEru5CEKA%3d&risl=&pid=ImgRaw&r=0"
         type="image/x-icon" />
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins&display=swap" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>

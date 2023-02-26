@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         //     ['status' => 'Active']
         // );
         $this->call(UserSeeder::class);
+        $this->call(PostSeeder::class);
 
         \App\Models\Category::factory()->create([
             'name' => 'Web Programming',
@@ -35,7 +36,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'UI/UX',
         ]);
         \App\Models\Category::factory()->create([
-            'name' => 'Android Devoloper',
+            'name' => 'Mobile Development',
+        ]);
+
+        \App\Models\Category::factory()->create([
+            'name' => 'Data Science',
+        ]);
+
+        \App\Models\Category::factory()->create([
+            'name' => 'Cloud Computing',
+        ]);
+
+        \App\Models\Category::factory()->create([
+            'name' => 'Artificial Intelligence',
         ]);
         \App\Models\Category::factory()->create([
             'name' => 'Front End Devoloper',
@@ -59,6 +72,19 @@ class DatabaseSeeder extends Seeder
         \App\Models\Tags::factory()->create([
             'name' => 'Game',
         ]);
+        \App\Models\Tags::factory()->create([
+            'name' => 'Database',
+        ]);
+        \App\Models\Tags::factory()->create([
+            'name' => 'Machine Learning',
+        ]);
+        \App\Models\Tags::factory()->create([
+            'name' => 'Networking',
+        ]);
+        \App\Models\Tags::factory()->create([
+            'name' => 'Security',
+        ]);
+
         \App\Models\Tags::factory()->create([
             'name' => 'Web',
         ]);

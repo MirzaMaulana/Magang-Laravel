@@ -49,10 +49,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-       protected $attributes = [
+    protected $attributes = [
         'status' => 'Active',
-        'role' => 'Admin',
+        'role' => 'User',
         'image' => '',
-        
+
     ];
 }

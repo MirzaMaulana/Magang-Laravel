@@ -20,11 +20,13 @@ function destroy(event) {
                 confirmButton
                     .html("Yes, delete", false)
                     .prop("disabled", false);
+                toastr.success(res.success);
             })
             .fail(function (err) {
                 confirmButton
                     .html("Yes, delete", false)
                     .prop("disabled", false);
+                // toastr.error(err.responseJSON.message);
             });
     });
 }

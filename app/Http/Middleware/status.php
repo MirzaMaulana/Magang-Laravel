@@ -24,7 +24,7 @@ class status
         if (Auth::user()->role != 'Member') {
             return $next($request);
         } else {
-            return redirect('/');
+            return redirect('/profile');
         }
     }
 }

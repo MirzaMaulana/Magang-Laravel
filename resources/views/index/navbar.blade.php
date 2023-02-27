@@ -17,7 +17,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mt-1 mx-auto">
                 <li class="nav-item active" style="margin-left: 90px">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{{ route('welcome') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
@@ -56,6 +56,7 @@
                             @if (auth()->user()->role != 'Member')
                                 <a class="dropdown-item" href="{{ route('home') }}">Dashboard</a>
                             @endif
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

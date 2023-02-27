@@ -29,9 +29,11 @@ Route::get('/', [ViewController::class, 'index'])->name('welcome');
 
 Route::get('/posts/{post:slug}', [ViewController::class, 'show'])->name('post.show');
 
+Route::get('/profile', [ViewController::class, 'edit'])->middleware('verified', 'auth')->name('profile.edit');
 // Route comment
-Route::post('/comment', [CommentController::class, 'create'])->name('comment.add');
-Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
+Route::post('/comment', [CommentController::class, 'create'])->middleware('auth')->name('comment.add');
+Route::delete('/{comment}', [CommentController::class, 'destroy'])->middleware('auth')->name('comment.delete');
+Route::put('/update/{comment}', [CommentController::class, 'update'])->middleware('auth')->name('comment.update');
 // Route hanya bisa di akses admin atau superadmin
 Route::middleware(['auth', 'Active', 'Admin'])->group(function () {
     // mengakses home dashboard

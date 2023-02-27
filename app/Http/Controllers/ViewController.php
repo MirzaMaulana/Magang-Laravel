@@ -33,6 +33,10 @@ class ViewController extends Controller
             "posts" => Post::latest()->filter(request(['tag', 'category']))->paginate(6)->withQueryString()
         ]);
     }
+    public function edit()
+    {
+        return view('my-profile.profile');
+    }
 
     public function show(Post $post)
     {

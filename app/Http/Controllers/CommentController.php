@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class CommentController extends Controller
         return redirect()->back()->with('success', 'Comment Created Successfully!');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Comment $comment)
     {
         $request->validate([
             'content' => ['required']
@@ -39,7 +40,9 @@ class CommentController extends Controller
             "user_id" => auth()->id(),
             "content" => $request->content,
         ];
-        $comment = Comment::create($data);
+        $findComment = Comment::find($comment->id);
+        $findComment->update($data);
+
         return redirect()->back()->with('success', 'Comment Created Successfully!');
     }
     public function destroy(Comment $comment)

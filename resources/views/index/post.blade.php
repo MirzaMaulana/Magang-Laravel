@@ -67,27 +67,38 @@
                                         <i class="bi bi-list"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Edit Comment</a></li>
+                                        <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#editCommentModal{{ $comment['id'] }}">Edit
+                                                Comment</button></li>
                                         <li>
                                             <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="DELETE">
-                                                <button class="dropdown-item border-0 mr-2">
+                                                <button type="submit" class="dropdown-item border-0 mr-2">
                                                     Delete Comment
                                                 </button>
                                             </form>
                                         </li>
                                     </ul>
                                 </div>
-                                <img src="https://via.placeholder.com/50" class="mr-3 rounded-circle" alt="...">
-                                <div class="media-body">
-                                    <h5 class="mt-0">{{ $comment->user->name }}</h5>
-                                    <p>{{ $comment->content }}</p>
-                                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                <div class="d-flex">
+                                    @if ($comment->user->image)
+                                        <img src="{{ asset('storage/avatars/' . $comment->user->image) }}"
+                                            class="mr-3 me-2 rounded-circle" width="40" height="40" alt="...">
+                                    @else
+                                        <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
+                                            class="mr-3 me-2 rounded-circle" width="40" height="40" alt="...">
+                                    @endif
+                                    <div class="media-body">
+                                        <h5 class="mt-0">{{ $comment->user->name }}</h5>
+                                        <p>{{ $comment->content }}</p>
+                                        <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                    </div>
                                 </div>
                                 <hr>
                             </div>
+                            @include('includes.modal-editcomment')
                         @endforeach
                     </div>
                 </div>
@@ -95,4 +106,5 @@
             {{-- end comment --}}
         </div>
     </div>
+    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection

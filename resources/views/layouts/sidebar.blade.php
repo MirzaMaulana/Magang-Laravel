@@ -116,14 +116,30 @@
                     </ul>
                 </li>
                 @if (auth()->user()->role == 'SuperAdmin')
-                    <li class="nav-item">
-                        <a href="{{ route('user.index') }}"
-                            class="nav-link {{ Request::is('user*') ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-users"></i>
+                    <li class="nav-item has-treeview  {{ Request::is('user*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Request::is('user*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users"></i>
                             <p>
-                                Members
+                                Admin
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('user.create') }}"
+                                    class="nav-link {{ Request::is('user/create') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-file-signature"></i>
+                                    <p>Create Admin</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('user.index') }}"
+                                    class="nav-link {{ Request::is('user/list') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-list-ol"></i>
+                                    <p>List Admin</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 @endif
 

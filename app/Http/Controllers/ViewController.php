@@ -11,6 +11,7 @@ class ViewController extends Controller
 {
     public function index(Request $request)
     {
+        // Mendapatkan nama category atau tag
         $categoryName = null;
         $tagName = null;
         if (request('category')) {

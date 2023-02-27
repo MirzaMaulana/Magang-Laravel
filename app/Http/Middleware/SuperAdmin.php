@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class roleCek
+class SuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -18,11 +18,10 @@ class roleCek
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->role != 'SuperAdmin')
-        {
-            return redirect("/home");
+        if (Auth::user()->role != 'SuperAdmin') {
+            return redirect("/");
         }
-        
+
         return $next($request);
     }
 }

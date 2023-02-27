@@ -21,6 +21,10 @@ class status
             Auth::logout();
             return redirect("/login")->with('error', 'Akun Anda Telah Terblokir');
         }
-        return $next($request);
+        if (Auth::user()->role != 'Member') {
+            return $next($request);
+        } else {
+            return redirect('/');
+        }
     }
 }

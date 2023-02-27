@@ -9,6 +9,7 @@ use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MyProfileController;
 
 /*
@@ -24,20 +25,24 @@ use App\Http\Controllers\MyProfileController;
 
 Auth::routes(['verify' => true]);
 
-
-
-
 Route::get('/', [ViewController::class, 'index'])->name('welcome');
 
 Route::get('/posts/{post:slug}', [ViewController::class, 'show'])->name('post.show');
-// Admin
-Route::middleware(['Admin'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->middleware('Active')->name('home');
+
+// Route comment
+Route::post('/comment', [CommentController::class, 'create'])->name('comment.add');
+Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
+// Route hanya bisa di akses admin atau superadmin
+Route::middleware(['auth', 'Active', 'Admin'])->group(function () {
+    // mengakses home dashboard
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    //untuk mengakses edit profile
     Route::prefix('my-profile')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [MyProfileController::class, 'index'])->name('my.profile.index');
         Route::put('/', [MyProfileController::class, 'update'])->name('my.profile.update');
     });
-    Route::prefix('tag')->middleware(['auth', 'verified'])->group(function () {
+    //membuat tag
+    Route::prefix('tag')->group(function () {
         Route::controller(TagsController::class)->group(function () {
             Route::get('/create', 'create')->name('tag.create');
             Route::post('/', 'store')->name('tag.input');
@@ -48,8 +53,8 @@ Route::middleware(['Admin'])->group(function () {
             Route::delete('/{tag}', 'destroy')->name('tag.destroy');
         });
     })->name('tag');
-
-    Route::prefix('category')->middleware(['auth', 'verified'])->group(function () {
+    //membuat categery
+    Route::prefix('category')->group(function () {
         Route::controller(CategoryController::class)->group(function () {
             Route::get('/create', 'create')->name('category.create');
             Route::post('/', 'store')->name('category.input');
@@ -61,9 +66,10 @@ Route::middleware(['Admin'])->group(function () {
         });
     })->name('category');
 
+    //mengambil slug
     Route::get('/post/checkSlug', [PostController::class, 'checkSlug']);
-
-    Route::prefix('post')->middleware(['auth', 'verified'])->group(function () {
+    //route untuk post
+    Route::prefix('post')->group(function () {
         Route::controller(PostController::class)->group(function () {
             Route::get('/create', 'create')->name('post.create');
             Route::post('/', 'store')->name('post.input');
@@ -74,7 +80,7 @@ Route::middleware(['Admin'])->group(function () {
             Route::delete('/{post}', 'destroy')->name('post.destroy');
         });
     })->name('post');
-
+    // route untuk mengakses semua user
     Route::prefix('user')->middleware('SuperAdmin')->group(function () {
         Route::controller(UserController::class)->group(function () {
             Route::get('/create', 'create')->name('user.create');

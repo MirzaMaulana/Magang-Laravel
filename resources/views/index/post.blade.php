@@ -41,10 +41,58 @@
                 </div>
 
 
-                <p><a href="/" class="mt-3 text-decoration-none btn btn-outline-success"><i
+                <p><a href="/" class="my-3 text-decoration-none btn btn-outline-success"><i
                             class="bi bi-box-arrow-left me-2"></i> Back to
                         Posts</a></p>
+                {{-- Comments Block --}}
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments</h5>
+                        <hr>
+                        <form action="{{ route('comment.add') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <div class="form-group">
+                                <label for="content">Leave a comment</label>
+                                <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="mt-3 btn btn-outline-success">Submit</button>
+                        </form>
+                        <hr>
+                        @foreach ($post->comment as $comment)
+                            <div class="media mt-3">
+                                <div class="dropdown float-end">
+                                    <a class="text-dark" href="#" role="button" id="dropdownMenuLink"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-list"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#">Edit Comment</a></li>
+                                        <li>
+                                            <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button class="dropdown-item border-0 mr-2">
+                                                    Delete Comment
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <img src="https://via.placeholder.com/50" class="mr-3 rounded-circle" alt="...">
+                                <div class="media-body">
+                                    <h5 class="mt-0">{{ $comment->user->name }}</h5>
+                                    <p>{{ $comment->content }}</p>
+                                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                </div>
+                                <hr>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
+            {{-- end comment --}}
         </div>
     </div>
 @endsection

@@ -48,6 +48,10 @@ class Post extends Model
     {
         return $this->belongsToMany(Tags::class, "post_tag", "post_id", "tag_id");
     }
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
     public function sluggable(): array
     {
         return [

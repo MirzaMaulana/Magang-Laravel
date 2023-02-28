@@ -67,7 +67,7 @@
     @elseif ($tagName)
         <h2 class="mt-2 " style="font-family: Roboto Slab"># {{ $tagName }}</h2>
     @else
-        <h2 class="mt-2 " style="font-family: Roboto Slab">Berita Terkini</h2>
+        <h2 class="mt-2 " style="font-family: Roboto Slab">News</h2>
     @endif
     {{-- post --}}
     <div class="container mt-4">
@@ -98,8 +98,6 @@
                                         class="bi bi-arrow-up-right-circle absolute"></i></a>
                             </h5>
                             <p class="card-text">{{ Str::limit(strip_tags($post->content), 80, '...') }}</p>
-                            {{-- <a href="{{ route('post.show', $post->slug) }}" class="btn btn-outline-success">Read
-                                    More</a> --}}
                             <small class="category" style="font-size:10px">
                                 @foreach ($post->category as $category)
                                     <a

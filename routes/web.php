@@ -33,6 +33,7 @@ Route::get('/posts/{post:slug}', [ViewController::class, 'show'])->name('post.sh
 Auth::routes(['verify' => true]);
 
 Route::get('/profile', [ViewController::class, 'edit'])->middleware('verified', 'auth')->name('profile.edit');
+Route::put('/profileedit', [ViewController::class, 'update'])->middleware('verified', 'auth')->name('profile.update');
 
 // Route comment
 Route::middleware(['auth', 'verified'])->group(function () {

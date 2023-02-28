@@ -1,18 +1,14 @@
 @extends('index.app')
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="post col-md-10">
+        <div class="row justify-content-center my-3">
+            <div class="post col-md-10 ">
                 <div class=" mt-3 text-center">
                     <h1>{{ $post->title }}</h1>
                 </div>
 
                 {{-- User --}}
                 <div class="d-flex my-4 justify-content-center">
-                    {{-- <div class="me-3">
-                        <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
-                            class="img-profile rounded-circle" height="50" width="50">
-                    </div> --}}
                     <div class="">
                         <div class="card-body text-center">
                             <h5 class="card-title">Author : {{ $post->created_by }}</h5>
@@ -22,7 +18,7 @@
                     </div>
                 </div>
                 <hr>
-                <img src="{{ asset('storage/posts/' . $post->image) }}" alt="" class="post-img img-fluid">
+                <img src="{{ asset('storage/posts/' . $post->image) }}" alt="" class="post-img">
                 <hr>
                 <article class="my-3 fs-5">
                     {!! $post->content !!}
@@ -118,8 +114,64 @@
                         @endforelse
                     </div>
                 </div>
+                <hr>
             </div>
             {{-- end comment --}}
+
+            <div class="row justify-content-center">
+
+                <h2 class="text-center my-3">More Posts</h2>
+                @foreach ($posts as $post)
+                    <div class="col-md-10 mb-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="{{ asset('storage/posts/' . $post->image) }}" height="140" class="card-img-top"
+                                    alt="">
+
+                            </div>
+                            <div class="col">
+                                <h5 class="title d-flex justify-content-between"><a
+                                        href="{{ route('post.show', $post->slug) }}" class="text-decoration-none">
+                                        {{ $post->title }}</a> <a href="{{ route('post.show', $post->slug) }}"
+                                        class="text-dark"><i class="bi bi-arrow-up-right-circle absolute"></i></a>
+                                </h5>
+                                <small><a href=""
+                                        class="text-decoration-none text-dark">{{ $post->created_by }}</a></small>
+                                <p class="card-text">{{ Str::limit(strip_tags($post->content), 100, '...') }}</p>
+                                <small>{{ $post->created_at->format('d F Y') }}</small>
+                            </div>
+
+                        </div>
+                        <hr>
+                    </div>
+
+                    {{-- <div class="post-card card">
+                            
+                            <small id="tags" class="position-absolute ms-2 text-light">
+                                @foreach ($post->tag as $tag)
+                                    <a href="{{ route('welcome', ['tag' => $tag->name]) }}"
+                                        class="text-light text-decoration-none mt-2 d-inline-block">
+                                        #{{ $tag->name }}
+                                    </a>
+                                @endforeach
+                            </small>
+                            <div class="card-body">
+                                <small><a href="" class="text-decoration-none text-dark">{{ $post->created_by }}</a>
+                                </small>
+                                <h5 class="card-title d-flex justify-content-between">
+                                    <a href="{{ route('post.show', $post->slug) }}"
+                                        class="text-decoration-none text-dark">{{ Str::limit(strip_tags($post->title), 25, '...') }}</a>
+                                    <a href="{{ route('post.show', $post->slug) }}" class="text-dark"><i
+                                            class="bi bi-arrow-up-right-circle absolute"></i></a>
+                                </h5>
+                                
+
+                                <small>{{ $post->created_at->format('d F Y') }}</small>
+                            </div>
+                        </div> --}}
+                @endforeach
+            </div>
+
         </div>
     </div>
 @endsection

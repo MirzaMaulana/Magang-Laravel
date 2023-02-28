@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\Category;
 use App\Models\Tags;
+use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
 {
@@ -37,11 +39,34 @@ class ViewController extends Controller
     {
         return view('my-profile.profile');
     }
-
+    public function update(Request $request, User $user)
+    {
+        // input data
+        $data = [
+            'name' => $request->name,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'alamat' => $request->alamat,
+        ];
+        //Mengecek apakah user upload image
+        if ($request->hasFile('image')) {
+            // Menginput image user
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('avatars', $filename);
+            $data = ['image' => $filename];
+        }
+        //Menyimpan data update user
+        $users = Auth::user();
+        $findUser = User::find($users->id);
+        $findUser->update($data);
+        //mengembalikan ke halaman ketika user berhasil update
+        return redirect()->route('welcome')->with('success', 'updated profile successfully');
+    }
     public function show(Post $post)
     {
         return view('index.post', [
-            'post' => $post
+            'post' => $post,
+            "posts" => Post::inRandomOrder()->limit(4)->get()
         ]);
     }
 }

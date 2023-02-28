@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Edit Profile') }}</div>
                     <div class="card-body">
-                        <form action="{{ route('my.profile.update') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             {{-- Name --}}

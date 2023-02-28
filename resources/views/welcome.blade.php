@@ -100,7 +100,7 @@
                             <p class="card-text">{{ Str::limit(strip_tags($post->content), 80, '...') }}</p>
                             {{-- <a href="{{ route('post.show', $post->slug) }}" class="btn btn-outline-success">Read
                                     More</a> --}}
-                            <small class="category" style="font-size:13px">
+                            <small class="category" style="font-size:10px">
                                 @foreach ($post->category as $category)
                                     <a
                                         href="{{ route('welcome', ['category' => $category->name]) }}"class="text-decoration-none border px-1 border-dark me-1 mt-1 rounded-4 text-dark">{{ $category->name }}</a>

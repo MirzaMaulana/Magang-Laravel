@@ -2,26 +2,28 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="post col-md-8">
-                <div class="text-center mt-3">
-
-                    <h2>{{ $post->title }}</h2>
+            <div class="post col-md-10">
+                <div class=" mt-3 text-center">
+                    <h1>{{ $post->title }}</h1>
                 </div>
+
                 {{-- User --}}
-                <div class="d-flex justify-content-center my-4">
-                    <div class="me-3">
+                <div class="d-flex my-4 justify-content-center">
+                    {{-- <div class="me-3">
                         <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
                             class="img-profile rounded-circle" height="50" width="50">
-                    </div>
+                    </div> --}}
                     <div class="">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $post->created_by }}</h5>
-                            <p class="card-text"><small class="text-muted">{{ $post->created_at->format('d F Y') }}</small>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Author : {{ $post->created_by }}</h5>
+                            <p class="card-text"><small class="text-muted">{{ $post->created_at->format('l, j F Y') }}</small>
                             </p>
                         </div>
                     </div>
                 </div>
-                <img src="{{ asset('storage/posts/' . $post->image) }}" alt="" class="post-img">
+                <hr>
+                <img src="{{ asset('storage/posts/' . $post->image) }}" alt="" class="post-img img-fluid">
+                <hr>
                 <article class="my-3 fs-5">
                     {!! $post->content !!}
                 </article>

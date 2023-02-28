@@ -120,6 +120,6 @@ class UserController extends Controller
         $findUser = User::find($user->id);
         $findUser->update($data);
         //mengembalikan ke halaman ketika user berhasil update
-        return redirect('/user')->with('success', 'User updated successfully');
+        return redirect()->route('user.index')->with('success', 'User updated successfully');
     }
 }

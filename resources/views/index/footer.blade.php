@@ -1,4 +1,4 @@
-<footer class="bg-light text-center text-white">
+<footer class="mt-5 bg-light text-center text-white">
     <div class="container p-4 pb-0">
         <section class="mb-4">
             <!-- Facebook -->
@@ -25,7 +25,7 @@
                 role="button"><i class="fab fa-github"></i></a>
         </section>
     </div>
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.8);">
         © 2023 Copyright:
         <a class="text-white text-decoration-none" href="">Bootcamp Laravel</a>
     </div>

@@ -18,6 +18,7 @@
                                     <th>Foto</th>
                                     <th>Nama</th>
                                     <th>Email</th>
+                                    <th widht="10%">Role</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -64,6 +65,9 @@
                     },
                     {
                         data: 'email'
+                    },
+                    {
+                        data: 'role'
                     },
                     {
                         data: 'status'

@@ -120,7 +120,7 @@
                         <a href="#" class="nav-link {{ Request::is('user*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
-                                Admin
+                                Member
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -136,7 +136,7 @@
                                 <a href="{{ route('user.index') }}"
                                     class="nav-link {{ Request::is('user/list') ? 'active' : '' }}">
                                     <i class="nav-icon fa fa-list-ol"></i>
-                                    <p>List Admin</p>
+                                    <p>List Member</p>
                                 </a>
                             </li>
                         </ul>

@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -20,8 +21,8 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->sentence(5),
             'slug' => Str::slug($this->faker->sentence(5)),
-            'image' => $this->faker->image('public/storage/posts', 1200, 400, null, false),
-            'is_pinned' => 0,
+            'image' => basename(collect(glob(public_path('storage/posts/*')))->random()),
+            'is_pinned' =>  mt_rand(0, 1),
             'content' => $this->faker->paragraphs(3, true),
             'created_by' => $this->faker->name(),
         ];

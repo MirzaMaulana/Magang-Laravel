@@ -20,11 +20,12 @@ class status
         if (Auth::user()->status != 'Active') {
             Auth::logout();
             return redirect("/login")->with('error', 'Akun Anda Telah Terblokir');
-        }
-        if (Auth::user()->role != 'Member') {
+        } elseif (Auth::user()->role != 'Member') {
             return $next($request);
+        } elseif (!auth()->user()->email_verified_at) {
+            return redirect('/email/verify');
         } else {
-            return redirect('/profile');
+            return redirect('/');
         }
     }
 }

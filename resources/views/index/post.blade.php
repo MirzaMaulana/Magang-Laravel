@@ -47,41 +47,51 @@
                 {{-- Comments Block --}}
                 <div class="card mt-3">
                     <div class="card-body">
-                        <h5 class="card-title">Comments</h5>
-                        <hr>
-                        <form action="{{ route('comment.add') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="post_id" value="{{ $post->id }}">
-                            <div class="form-group">
-                                <label for="content">Leave a comment</label>
-                                <textarea class="form-control" name="content" id="content" rows="3"></textarea>
-                            </div>
-                            <button type="submit" class="mt-3 btn btn-outline-success">Submit</button>
-                        </form>
-                        <hr>
-                        @foreach ($post->comment as $comment)
-                            <div class="media mt-3">
-                                <div class="dropdown float-end">
-                                    <a class="text-dark" href="#" role="button" id="dropdownMenuLink"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-list"></i>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li><button class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#editCommentModal{{ $comment['id'] }}">Edit
-                                                Comment</button></li>
-                                        <li>
-                                            <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
-                                                method="POST">
-                                                @csrf
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <button type="submit" class="dropdown-item border-0 mr-2">
-                                                    Delete Comment
-                                                </button>
-                                            </form>
-                                        </li>
-                                    </ul>
+                        @if (auth()->check())
+                            <h5 class="card-title">Comments</h5>
+                            <hr>
+                            <form action="{{ route('comment.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <div class="form-group">
+                                    <label for="content">Leave a comment</label>
+                                    <textarea class="form-control" name="content" id="content" rows="3"></textarea>
                                 </div>
+                                <button type="submit" class="mt-3 btn btn-outline-success">Submit</button>
+                            </form>
+                        @else
+                            <div class="alert alert-warning" role="alert">
+                                You Need to be <a href="{{ route('login') }}">logged</a> in to comment!
+                            </div>
+                        @endif
+
+                        <hr>
+                        @forelse ($post->comment as $comment)
+                            <div class="media mt-3">
+                                @if (auth()->check() && auth()->user()->id == $comment->user_id)
+                                    <div class="dropdown float-end">
+                                        <a class="text-dark" href="#" role="button" id="dropdownMenuLink"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-list"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#editCommentModal{{ $comment['id'] }}">Edit
+                                                    Comment</button></li>
+                                            <li>
+                                                <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button type="submit" class="dropdown-item border-0 mr-2">
+                                                        Delete Comment
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="d-flex">
                                     @if ($comment->user->image)
                                         <img src="{{ asset('storage/avatars/' . $comment->user->image) }}"
@@ -99,12 +109,18 @@
                                 <hr>
                             </div>
                             @include('includes.modal-editcomment')
-                        @endforeach
+                        @empty
+                            <div class="alert alert-info" role="alert">
+                                No comments on this post yet
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
             {{-- end comment --}}
         </div>
     </div>
-    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection
+@push('script')
+    <script src="{{ asset('js/submit.js') }}"></script>
+@endpush

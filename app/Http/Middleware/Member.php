@@ -17,7 +17,7 @@ class Member
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role == 'Member') {
+        if (Auth::user()->role === 'Member') {
             return redirect("/");
         }
         return $next($request);

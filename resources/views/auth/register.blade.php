@@ -1,4 +1,4 @@
-@extends('auth.app')
+@extends('index.app')
 
 @section('content')
     <div class="container">
@@ -79,5 +79,7 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/submit.js') }}"></script>
 @endsection
+@push('script')
+    <script src="{{ asset('js/submit.js') }}"></script>
+@endpush

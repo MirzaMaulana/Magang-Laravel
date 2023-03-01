@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('image');
+            $table->integer('views');
             $table->boolean('is_pinned');
             $table->longText('content');
             $table->string('created_by');

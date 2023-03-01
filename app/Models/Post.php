@@ -16,6 +16,7 @@ class Post extends Model
         'title',
         'slug',
         'image',
+        'views',
         'content',
         'is_pinned',
         'created_by',
@@ -23,6 +24,7 @@ class Post extends Model
 
     protected $attributes = [
         'image' => '',
+        'views' => 0,
         'is_pinned' => ''
     ];
 

@@ -17,7 +17,7 @@
                                     <th>No</th>
                                     <th>Pin</th>
                                     <th>title</th>
-                                    <th>slug</th>
+                                    <th>views</th>
                                     <th width="30%">Create By</th>
                                     <th width="10%">Aksi</th>
                                 </tr>
@@ -61,7 +61,7 @@
                         data: 'title'
                     },
                     {
-                        data: 'slug'
+                        data: 'views'
                     },
                     {
                         data: 'created_by'

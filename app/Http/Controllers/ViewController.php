@@ -62,8 +62,13 @@ class ViewController extends Controller
         //mengembalikan ke halaman ketika user berhasil update
         return redirect()->route('welcome')->with('success', 'updated profile successfully');
     }
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
+        if ($post->slug == $request->route('post.show', $post->slug)) {
+            $post->views++;
+            $post->save();
+        }
+
         return view('index.post', [
             'post' => $post,
             "posts" => Post::inRandomOrder()->limit(4)->get()

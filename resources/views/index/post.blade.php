@@ -64,7 +64,7 @@
                                 <label for="content">Leave a comment</label>
                                 <textarea class="form-control" name="content" id="content" rows="3"></textarea>
                             </div>
-                            <button type="submit" class="mt-3 btn btn-outline-success">Submit</button>
+                            <button type="submit" id="button" class="mt-3 btn btn-outline-success">Submit</button>
                         </form>
                     @else
                         <div class="alert alert-warning" role="alert">
@@ -86,7 +86,8 @@
                                                 data-bs-target="#editCommentModal{{ $comment['id'] }}">Edit
                                                 Comment</button></li>
                                         <li>
-                                            <form action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
+                                            <form onsubmit="destroy(event)"
+                                                action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="DELETE">
@@ -116,6 +117,7 @@
                             <hr>
                         </div>
                         @include('includes.modal-editcomment')
+                        @include('includes.modal-delete')
                     @empty
                         <div class="alert alert-info" role="alert">
                             No comments on this post yet
@@ -147,7 +149,8 @@
                             <p class="card-text">{{ Str::limit(strip_tags($post->content), 100, '...') }}</p>
                             <small class="d-flex justify-content-between">
                                 <p>{{ $post->created_at->format('d F Y') }}</p>
-                                <p>{{ $post->views }} Views</p>
+                                <p>{{ $post->views > 1000 ? number_format($post->views / 1000, 1) . 'k' : $post->views }}
+                                    Views</p>
                             </small>
                         </div>
 
@@ -158,6 +161,6 @@
         </div>
     </div>
 @endsection
-@push('script')
-    <script src="{{ asset('js/submit.js') }}"></script>
+@push('scripts')
+    <script src="{{ asset('js/comment.js') }}"></script>
 @endpush

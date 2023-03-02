@@ -80,6 +80,6 @@
         </div>
     </div>
 @endsection
-@push('script')
+@push('scripts')
     <script src="{{ asset('js/submit.js') }}"></script>
 @endpush

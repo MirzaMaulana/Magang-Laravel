@@ -90,7 +90,9 @@
                                 <p><a href="" class="text-decoration-none text-dark">{{ $post->created_by }}</a>
                                     <b>· {{ $post->created_at->format('d F Y') }}</b>
                                 </p>
-                                <p>{{ $post->views }} Views</p>
+                                <p>{{ $post->views > 1000 ? number_format($post->views / 1000, 1) . 'k' : $post->views }}
+                                    Views
+                                </p>
                             </small>
                             <h5 class="card-title d-flex justify-content-between">
                                 <a href="{{ route('post.show', $post->slug) }}"

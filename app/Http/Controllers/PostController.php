@@ -146,7 +146,7 @@ class PostController extends Controller
         $post->update($data);
 
         //mengembalikan ke halaman ketika user berhasil update
-        return redirect('/post/list')->with('success', 'User updated successfully');
+        return redirect('/post/list')->with('success', 'Post updated successfully');
     }
     public function checkSlug(Request $request)
     {

@@ -22,7 +22,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence(5),
             'slug' => Str::slug($this->faker->sentence(5)),
             'image' => basename(collect(glob(public_path('storage/posts/*')))->random()),
-            'views' => mt_rand(50, 2000),
+            'views' => mt_rand(100000, 2000000),
             'is_pinned' =>  mt_rand(0, 1),
             'content' => $this->faker->paragraphs(3, true),
             'created_by' => $this->faker->name(),

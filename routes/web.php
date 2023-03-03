@@ -32,11 +32,11 @@ Route::get('/posts/{post:slug}', [ViewController::class, 'show'])->name('post.sh
 
 Auth::routes(['verify' => true]);
 
-Route::get('/profile', [ViewController::class, 'edit'])->middleware('verified', 'auth')->name('profile.edit');
-Route::put('/profileedit', [ViewController::class, 'update'])->middleware('verified', 'auth')->name('profile.update');
+Route::get('/profile', [ViewController::class, 'edit'])->middleware('verified', 'auth', 'Active')->name('profile.edit');
+Route::put('/profileedit', [ViewController::class, 'update'])->middleware('verified', 'auth', 'Active')->name('profile.update');
 
 // Route comment
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'Active'])->group(function () {
     Route::post('/comment', [CommentController::class, 'create'])->name('comment.add');
     Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
     Route::put('/update/{comment}', [CommentController::class, 'update'])->name('comment.update');

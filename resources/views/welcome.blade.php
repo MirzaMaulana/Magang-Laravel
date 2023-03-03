@@ -1,5 +1,11 @@
 @extends('index.app')
 @section('content')
+    @if (session()->has('error'))
+        <div class="alert alert-danger absolute alert-dismissible fade show container" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     {{-- jumbotron --}}
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
@@ -8,65 +14,68 @@
             <p style="font-family: Roboto Slab">The latest industry news, interviews, tecnologies, and resource</p>
         </div>
     </div>
-    {{-- Carousel --}}
-    <div id="carouselExampleCaptions" class="mt-4 carousel slide" data-bs-ride="carousel">
+    {{-- menghilangkan slider saat category dan tag saat di klik --}}
+    @if ($categoryName || $tagName)
+        @if ($categoryName)
+            <h2 class="mt-4 text-center" style="font-family: Roboto Slab">{{ $categoryName }}</h2>
+        @elseif ($tagName)
+            <h2 class="mt-4 text-center " style="font-family: Roboto Slab"># {{ $tagName }}</h2>
+        @endif
+    @else
+        {{-- Carousel --}}
+        <div id="carouselExampleCaptions" class="mt-4 carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($pinnedPost as $post)
+                    <div class="position-absolute m-2 p-2 text-white">
+                        <h3 style="font-family: Roboto Slab">Most Populer</h3>
+                    </div>
+                    <a href="{{ route('post.show', $post->slug) }}">
 
-        <div class="carousel-inner">
-            @foreach ($pinnedPost as $post)
-                <div class="position-absolute m-2 p-2 text-white">
-                    <h3 style="font-family: Roboto Slab">Most Populer</h3>
-                </div>
-                <a href="{{ route('post.show', $post->slug) }}">
+                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
 
-                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                            <img src="{{ asset('storage/posts/' . $post->image) }}" class="img-pin d-block w-100"
+                                alt="..." style="filter: brightness(70%)">
+                            <div class="carousel-caption text-start d-none d-md-block">
+                                <small class="text-light">
+                                    <b><a href="" class="text-decoration-none text-light">{{ $post->created_by }}</a>
+                                        <b>· {{ $post->created_at->format('d F Y') }}</b>
+                                    </b>
+                                </small>
+                                <h2>{{ $post->title }}</h2>
+                                <p>{{ Str::limit(strip_tags($post->content), 70, '...') }}</p>
+                                <div style="margin-top:-15px">
+                                    @foreach ($post->tag as $tag)
+                                        <a href="{{ route('welcome', ['tag' => $tag->name]) }}"
+                                            class="text-primary my-2 text-decoration-none d-inline-block">
+                                            #{{ $tag->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
 
-                        <img src="{{ asset('storage/posts/' . $post->image) }}" class="d-block w-100" alt="..."
-                            height="500" style="filter: brightness(70%)">
-                        <div class="carousel-caption text-start d-none d-md-block">
-                            <small class="text-light">
-                                <b><a href="" class="text-decoration-none text-light">{{ $post->created_by }}</a>
-                                    <b>· {{ $post->created_at->format('d F Y') }}</b>
-                                </b>
-                            </small>
-                            <h2>{{ $post->title }}</h2>
-                            <p>{{ Str::limit(strip_tags($post->content), 70, '...') }}</p>
-                            <div style="margin-top:-15px">
-                                @foreach ($post->tag as $tag)
-                                    <a href="{{ route('welcome', ['tag' => $tag->name]) }}"
-                                        class="text-primary my-2 text-decoration-none d-inline-block">
-                                        #{{ $tag->name }}
-                                    </a>
+                                @foreach ($post->category as $category)
+                                    <small class="text-muted">
+                                        <a href="{{ route('welcome', ['category' => $category->name]) }}"class="text-decoration-none p-1 px-2 rounded-4 text-light"
+                                            style="border:1px solid white">{{ $category->name }}</a>
+                                    </small>
                                 @endforeach
                             </div>
-
-                            @foreach ($post->category as $category)
-                                <small class="text-muted">
-                                    <a href="{{ route('welcome', ['category' => $category->name]) }}"class="text-decoration-none p-1 px-2 rounded-4 text-light"
-                                        style="border:1px solid white">{{ $category->name }}</a>
-                                </small>
-                            @endforeach
                         </div>
-                    </div>
-                </a>
-            @endforeach
-        </div>
+                    </a>
+                @endforeach
+            </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-    <hr>
-    {{-- Category --}}
-    @if ($categoryName)
-        <h2 class="mt-2 " style="font-family: Roboto Slab">{{ $categoryName }}</h2>
-    @elseif ($tagName)
-        <h2 class="mt-2 " style="font-family: Roboto Slab"># {{ $tagName }}</h2>
-    @else
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <hr>
         <h2 class="mt-2 " style="font-family: Roboto Slab">News</h2>
     @endif
     {{-- post --}}
@@ -90,7 +99,8 @@
                                 <p><a href="" class="text-decoration-none text-dark">{{ $post->created_by }}</a>
                                     <b>· {{ $post->created_at->format('d F Y') }}</b>
                                 </p>
-                                <p>{{ $post->views > 1000 ? number_format($post->views / 1000, 1) . 'k' : $post->views }}
+                                <p>
+                                    {{ $post->views > 1000000 ? number_format($post->views / 1000000, 2) . 'm' : ($post->views > 1000 ? number_format($post->views / 1000, 1, '.', '') . 'k' : $post->views) }}
                                     Views
                                 </p>
                             </small>

@@ -17,9 +17,9 @@ class status
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->status != 'Active') {
+        if (Auth::check() && Auth::User()->status == 'Blocked') {
             Auth::logout();
-            return redirect("/login")->with('error', 'Akun Anda Telah Terblokir');
+            return redirect()->to('/login')->with('error', 'Your session has expired because your status change.');
         } elseif (Auth::user()->role != 'Member') {
             return $next($request);
         } elseif (!auth()->user()->email_verified_at) {

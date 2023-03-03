@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="#" style="font-family: Roboto Slab">
-            <img src="https://th.bing.com/th/id/OIP.D2b5o5AIYbd0pkt0O73mAQHaHa?pid=ImgDet&w=640&h=640&rs=1" width="30"
-                height="30" class="d-inline-block align-top" alt="">
+            <img src="{{ asset('logo.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
             Tebarin Berita
         </a>
         {{-- <a class="navbar-brand" href="{{ url('/') }}">

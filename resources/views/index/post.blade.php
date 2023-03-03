@@ -4,7 +4,9 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-10">
                 <div class="mt-3 text-center">
-                    <small class="px-1 rounded-3 float-start" style="border:solid 1px black">{{ $post->views }} Views</small>
+                    <small class="px-1 rounded-3 float-start"
+                        style="border:solid 1px black">{{ $post->views > 1000000 ? number_format($post->views / 1000000, 2) . 'm' : ($post->views > 1000 ? number_format($post->views / 1000, 1, '.', '') . 'k' : $post->views) }}
+                        Views</small>
                     <h1>{{ $post->title }}</h1>
                 </div>
 
@@ -20,7 +22,8 @@
                     </div>
                 </div>
                 <hr>
-                <img src="{{ asset('storage/posts/' . $post->image) }}" alt="" id="post-img" class="img-fluid">
+                <img src="{{ asset('storage/posts/' . $post->image) }}" alt="" id="post-img"
+                    class="img-fluid card-img-top">
                 <hr>
                 <article class="my-3 fs-5">
                     {!! $post->content !!}

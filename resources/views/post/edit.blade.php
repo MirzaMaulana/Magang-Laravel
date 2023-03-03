@@ -52,14 +52,14 @@
                                 <div class="col-md-6">
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                         <input type="radio" class="btn-check" name="is_pinned" id="is_pinned1"
-                                            value="1" value="{{ old('is_pinned', $post->is_pinned) }}"
-                                            {{ $post->is_pinned == 1 ? 'checked' : '' }} autocomplete="off">
+                                            value="1" {{ old('is_pinned', $post->is_pinned) == 1 ? 'checked' : '' }}
+                                            autocomplete="off">
                                         <label class="btn rounded-4 btn-outline-success me-2"
                                             for="is_pinned1">Pinned</label>
 
                                         <input type="radio" class="btn-check" name="is_pinned" id="is_pinned2"
-                                            value="0" value="{{ old('is_pinned', $post->is_pinned) }}"
-                                            {{ $post->is_pinned == 0 ? 'checked' : '' }} autocomplete="off">
+                                            value="0" {{ old('is_pinned', $post->is_pinned) == 0 ? 'checked' : '' }}
+                                            autocomplete="off">
                                         <label class="btn rounded-4 btn-outline-warning" for="is_pinned2">No Pin</label>
 
                                     </div>

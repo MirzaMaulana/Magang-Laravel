@@ -17,7 +17,7 @@
                                     <th>No</th>
                                     <th>Pin</th>
                                     <th>title</th>
-                                    <th>views</th>
+                                    <th width="15%">views</th>
                                     <th width="30%">Create By</th>
                                     <th width="10%">Aksi</th>
                                 </tr>

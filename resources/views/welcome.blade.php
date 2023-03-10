@@ -17,9 +17,11 @@
     {{-- menghilangkan slider saat category dan tag saat di klik --}}
     @if ($categoryName || $tagName)
         @if ($categoryName)
-            <h2 class="mt-4 text-center" style="font-family: Roboto Slab">{{ $categoryName }}</h2>
+            <h2 class="my-5 text-center p-1 rounded-3" style="font-family: Roboto Slab">
+                {{ $categoryName }}</h2>
         @elseif ($tagName)
-            <h2 class="mt-4 text-center " style="font-family: Roboto Slab"># {{ $tagName }}</h2>
+            <h2 class="my-5 text-center p-1 rounded-3" style="font-family: Roboto Slab">#
+                {{ $tagName }}</h2>
         @endif
     @else
         {{-- Carousel --}}

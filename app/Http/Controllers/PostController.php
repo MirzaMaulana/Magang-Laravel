@@ -76,7 +76,7 @@ class PostController extends Controller
                 </svg>' : '';
             })
             ->addColumn('views', function ($post) {
-                return '' . $post->views . '<i class="fa fa-eye ms-2"></i>';
+                return '' . $post->views > 1000000 ? number_format($post->views / 1000000, 2) . 'm' . '<i class="fa fa-eye ms-2"></i>' : ($post->views > 1000 ? number_format($post->views / 1000, 1, '.', '') . 'k' : $post->views) . '<i class="fa fa-eye ms-2"></i>';
             })
             ->addIndexColumn()
             ->escapeColumns(['action'])

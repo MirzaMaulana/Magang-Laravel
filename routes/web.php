@@ -12,6 +12,7 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MyProfileController;
+use App\Models\Comment;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'verified', 'Active'])->group(function () {
     Route::post('/comment', [CommentController::class, 'create'])->name('comment.add');
     Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
     Route::put('/update/{comment}', [CommentController::class, 'update'])->name('comment.update');
+    Route::post('/reply', [CommentController::class, 'reply'])->name('comment.reply');
 });
 // Route hanya bisa di akses admin atau superadmin
 Route::middleware(['auth', 'Active', 'Admin'])->group(function () {

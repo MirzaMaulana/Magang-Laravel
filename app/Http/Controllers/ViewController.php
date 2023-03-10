@@ -68,7 +68,8 @@ class ViewController extends Controller
             $post->views++;
             $post->save();
         }
-
+        // $post = Post::with('comment.replies')->where('id', $post->id)->first();
+        // dd($post->toArray());
         return view('index.post', [
             'post' => $post,
             "posts" => Post::inRandomOrder()->limit(4)->get()

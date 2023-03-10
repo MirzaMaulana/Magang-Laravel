@@ -106,20 +106,83 @@
                             <div class="d-flex">
                                 @if ($comment->user->image)
                                     <img src="{{ asset('storage/avatars/' . $comment->user->image) }}"
-                                        class="mr-3 me-2 rounded-circle" width="40" height="40" alt="...">
+                                        class="mr-3 me-4 rounded-circle" width="40" height="40" alt="...">
                                 @else
                                     <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
-                                        class="mr-3 me-2 rounded-circle" width="40" height="40" alt="...">
+                                        class="mr-3 me-4 rounded-circle" width="40" height="40" alt="...">
                                 @endif
                                 <div class="media-body">
-                                    <h5 class="mt-0">{{ $comment->user->name }}</h5>
+                                    <small class="mt-0">{{ $comment->user->name }}</small>
                                     <p>{{ $comment->content }}</p>
-                                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                    <div class="d-flex" style="margin-top: -10px">
+                                        <small class="text-muted me-2">{{ $comment->created_at->diffForHumans() }}</small>
+                                        <button class="badge me-2 bg-success text-decoration-none border-0"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
+                                    </div>
                                 </div>
                             </div>
+                            @foreach ($comment->replies as $reply)
+                                @if ($reply->parent_id != null)
+                                    {{-- Parents comments --}}
+                                    <div class="ms-4
+                                            mt-3 d-flex">
+
+                                        @if ($reply->user->image)
+                                            <img src="{{ asset('storage/avatars/' . $reply->user->image) }}"
+                                                class="mr-3 me-3 rounded-circle" width="40" height="40"
+                                                alt="...">
+                                        @else
+                                            <img src="https://th.bing.com/th/id/OIP.uc7jeY-cjioA7nqy6XkMnwAAAA?pid=ImgDet&rs=1"
+                                                class="mr-3 me-3 rounded-circle" width="40" height="40"
+                                                alt="...">
+                                        @endif
+                                        <div class="media-body py-2 px-3 w-100 rounded-3"
+                                            style="background-color:#f1f1f1">
+                                            @if (auth()->check() && auth()->user()->id == $reply->user_id)
+                                                <div class="dropdown float-end">
+                                                    <a class="text-dark" href="#" role="button"
+                                                        id="dropdownMenuLink" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="bi bi-list"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                                data-bs-target="#editCommentModal{{ $reply['id'] }}">Edit
+                                                                Comment</button></li>
+                                                        <li>
+                                                            <form onsubmit="destroy(event)"
+                                                                action="{{ route('comment.delete', ['comment' => $reply->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <button type="submit"
+                                                                    class="dropdown-item border-0 mr-2">
+                                                                    Delete Comment
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            <small class="mt-0">{{ $reply->user->name }}</small>
+                                            <p>{{ $reply->content }}</p>
+                                            <div class="d-flex" style="margin-top: -10px">
+                                                <small
+                                                    class="text-muted me-2">{{ $reply->created_at->diffForHumans() }}</small>
+                                                <button class="badge me-2 bg-success text-decoration-none border-0"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- end parents comments --}}
+                                @endif
+                            @endforeach
                             <hr>
                         </div>
                         @include('includes.modal-editcomment')
+                        @include('includes.modal-replycomment')
                         @include('includes.modal-delete')
                     @empty
                         <div class="alert alert-info" role="alert">

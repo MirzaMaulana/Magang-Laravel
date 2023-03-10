@@ -45,6 +45,24 @@ class CommentController extends Controller
 
         return redirect()->back()->with('success', 'Comment Created Successfully!');
     }
+    public function reply(Request $request, Comment $comment)
+    {
+        // Mendapatkan data komentar dan validasi form
+        $comment = Comment::findOrFail($request->input('comment_id'));
+
+        $request->validate([
+            'content' => ['required'],
+        ]);
+        // Menyimpan balasan komentar ke dalam database
+        $reply = new Comment;
+        $reply->post_id = $request->input('post_id');
+        $reply->content = $request->input('content');
+        $reply->user_id = auth()->user()->id;
+        $comment->replies()->save($reply);
+
+        // Redirect kembali ke halaman komentar
+        return redirect()->back();
+    }
     public function destroy(Comment $comment)
     {
         $comment->delete();

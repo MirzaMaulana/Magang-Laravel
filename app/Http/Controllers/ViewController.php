@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Tags;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\postLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,7 +73,7 @@ class ViewController extends Controller
         // dd($post->toArray());
         return view('index.post', [
             'post' => $post,
-            "posts" => Post::inRandomOrder()->limit(4)->get()
+            "posts" => Post::inRandomOrder()->limit(4)->get(),
         ]);
     }
 }

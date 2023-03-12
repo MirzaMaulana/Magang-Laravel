@@ -54,6 +54,10 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class)->whereNull('parent_id');
     }
+    public function postLike()
+    {
+        return $this->hasMany(postLike::class);
+    }
     public function sluggable(): array
     {
         return [

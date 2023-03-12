@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\Comment;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -9,10 +9,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\MyProfileController;
-use App\Models\Comment;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,3 +105,10 @@ Route::middleware(['auth', 'Active', 'Admin'])->group(function () {
         });
     })->name('user');
 });
+
+Route::prefix('like')->middleware('auth', 'verified', 'Active')->group(function () {
+    Route::controller(PostLikeController::class)->group(function () {
+        Route::post('/', 'store')->name('postlike.input');
+        Route::delete('/{postlike}', 'destroy')->name('postlike.destroy');
+    });
+})->name('postlike');

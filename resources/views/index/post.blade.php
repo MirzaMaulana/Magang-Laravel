@@ -4,9 +4,9 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-10">
                 <div class="mt-3 text-center">
-                    <small class="px-1 rounded-3 float-start"
+                    {{-- <small class="px-1 rounded-3 float-start"
                         style="border:solid 1px black">{{ $post->views > 1000000 ? number_format($post->views / 1000000, 2) . 'm' : ($post->views > 1000 ? number_format($post->views / 1000, 1, '.', '') . 'k' : $post->views) }}
-                        Views</small>
+                        Views</small> --}}
                     <h1>{{ $post->title }}</h1>
                 </div>
 
@@ -15,9 +15,18 @@
                     <div class="">
                         <div class="card-body text-center">
                             <h5 class="card-title">Author : {{ $post->created_by }}</h5>
-                            <p class="card-text"><small
-                                    class="text-muted">{{ $post->created_at->format('l, j F Y') }}</small>
+                            <p class="card-text"><small class="text-muted">{{ $post->created_at->format('l, j F Y') }}</small>
                             </p>
+                            <div class="d-flex justify-content-center">
+                                <small class="px-1 mx-1 rounded-3"
+                                    style="border:solid 1px black">{{ $post->views > 1000000 ? number_format($post->views / 1000000, 2) . 'm' : ($post->views > 1000 ? number_format($post->views / 1000, 1, '.', '') . 'k' : $post->views) }}
+                                    Views
+                                </small>
+                                <small class="px-1 rounded-3 mx-1"
+                                    style="border:solid 1px black">{{ $post->postLike->count() }}
+                                    Likes
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -25,6 +34,34 @@
                 <img src="{{ asset('storage/posts/' . $post->image) }}" alt="" id="post-img"
                     class="img-fluid card-img-top">
                 <hr>
+                <div class="d-flex justify-content-end">
+
+                    {{-- button  group --}}
+
+                    @if (auth()->check() && $post->postLike->where('user_id', Auth::user()->id)->count() > 0)
+                        <form
+                            action="{{ route('postlike.destroy', $post->postLike->where('user_id', Auth::user()->id)->first()->id) }}"
+                            method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger me-2">Unlike This Post <i
+                                    class="bi bi-hand-thumbs-down"></i></button>
+                        </form>
+                    @else
+                        <form method="POST" action="{{ route('postlike.input') }}">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <button class="btn btn-sm btn-success me-2">Like This Post <i
+                                    class="bi bi-hand-thumbs-up"></i></button>
+                        </form>
+                    @endif
+                    <button type="submit" class="btn btn-sm btn-primary me-2">Share this post <i
+                            class="bi bi-share"></i></button>
+                    <button type="submit" class="btn btn-sm btn-warning me-2">Save this post <i
+                            class="bi bi-save"></i></button>
+                    {{-- end button group --}}
+                </div>
+
                 <article class="my-3 fs-5">
                     {!! $post->content !!}
                 </article>
@@ -116,9 +153,11 @@
                                     <p>{{ $comment->content }}</p>
                                     <div class="d-flex" style="margin-top: -10px">
                                         <small class="text-muted me-2">{{ $comment->created_at->diffForHumans() }}</small>
-                                        <button class="badge me-2 bg-success text-decoration-none border-0"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
+                                        @if (auth()->check())
+                                            <button class="badge me-2 bg-success text-decoration-none border-0"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -170,9 +209,11 @@
                                             <div class="d-flex" style="margin-top: -10px">
                                                 <small
                                                     class="text-muted me-2">{{ $reply->created_at->diffForHumans() }}</small>
-                                                <button class="badge me-2 bg-success text-decoration-none border-0"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
+                                                @if (auth()->check())
+                                                    <button class="badge me-2 bg-success text-decoration-none border-0"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

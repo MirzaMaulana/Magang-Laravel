@@ -38,7 +38,7 @@ Route::get('/profile', [ViewController::class, 'edit'])->middleware('verified', 
 Route::put('/profileedit', [ViewController::class, 'update'])->middleware('verified', 'auth', 'Active')->name('profile.update');
 
 // Route comment
-Route::middleware(['auth', 'verified', 'Active'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/comment', [CommentController::class, 'create'])->name('comment.add');
     Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comment.delete');
     Route::put('/update/{comment}', [CommentController::class, 'update'])->name('comment.update');
@@ -106,7 +106,7 @@ Route::middleware(['auth', 'Active', 'Admin'])->group(function () {
     })->name('user');
 });
 
-Route::prefix('like')->middleware('auth', 'verified', 'Active')->group(function () {
+Route::prefix('like')->middleware('auth')->group(function () {
     Route::controller(PostLikeController::class)->group(function () {
         Route::post('/', 'store')->name('postlike.input');
         Route::delete('/{postlike}', 'destroy')->name('postlike.destroy');

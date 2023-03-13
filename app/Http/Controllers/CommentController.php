@@ -27,7 +27,7 @@ class CommentController extends Controller
             "content" => $request->content,
         ];
         $comment = Comment::create($data);
-        return redirect()->back()->with('success', 'Comment Created Successfully!');
+        return redirect()->back();
     }
 
     public function update(Request $request, Comment $comment)

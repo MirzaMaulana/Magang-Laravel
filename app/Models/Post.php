@@ -58,6 +58,10 @@ class Post extends Model
     {
         return $this->hasMany(postLike::class);
     }
+    public function postsave()
+    {
+        return $this->belongstoMany(PostSave::class);
+    }
     public function sluggable(): array
     {
         return [

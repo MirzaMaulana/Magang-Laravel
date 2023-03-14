@@ -12,6 +12,7 @@ use App\Http\Controllers\ViewController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\PostSaveController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
@@ -36,7 +37,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/profile', [ViewController::class, 'edit'])->middleware('verified', 'auth', 'Active')->name('profile.edit');
 Route::put('/profileedit', [ViewController::class, 'update'])->middleware('verified', 'auth', 'Active')->name('profile.update');
-
 // Route comment
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/comment', [CommentController::class, 'create'])->name('comment.add');
@@ -112,3 +112,11 @@ Route::prefix('like')->middleware('auth')->group(function () {
         Route::delete('/{postlike}', 'destroy')->name('postlike.destroy');
     });
 })->name('postlike');
+
+Route::prefix('postsave')->middleware('auth')->group(function () {
+    Route::controller(PostSaveController::class)->group(function () {
+        Route::get('/', 'index')->name('postsave.list');
+        Route::post('/', 'postsave')->name('postsave.input');
+        Route::delete('/{postsave}', 'destroy')->name('postsave.destroy');
+    });
+})->name('postsave');

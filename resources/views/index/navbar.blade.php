@@ -53,13 +53,19 @@
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             @if (auth()->user()->role != 'Member')
-                                <a class="dropdown-item" href="{{ route('home') }}">Dashboard</a>
+                                <a class="dropdown-item d-flex justify-content-between" href="{{ route('home') }}">Dashboard
+                                    <i class="bi bi-clipboard2-data"></i></a>
                             @endif
-                            <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item d-flex justify-content-between"
+                                href="{{ route('profile.edit') }}">Profile <i class="bi bi-person-vcard"></i></a>
+                            <a class="dropdown-item d-flex justify-content-between"
+                                href="{{ route('postsave.list') }}">Post
+                                Saves <i class="bi bi-bookmark-dash"></i></a>
+                            <a class="dropdown-item d-flex justify-content-between" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
+                                <i class="bi bi-box-arrow-left"></i>
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

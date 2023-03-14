@@ -7,6 +7,8 @@ use App\Models\Tags;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\postLike;
+use App\Models\PostSave;
+use Jorenvh\Share\Share;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -69,10 +71,13 @@ class ViewController extends Controller
             $post->views++;
             $post->save();
         }
-        // $post = Post::with('comment.replies')->where('id', $post->id)->first();
-        // dd($post->toArray());
+        $postsave = PostSave::where('post_id', $post->id)->where('user_id', auth()->id())->first();
+        $url = url("/posts/{$post->slug}");
+
         return view('index.post', [
             'post' => $post,
+            'postsave' => $postsave,
+            'url' => $url,
             "posts" => Post::inRandomOrder()->limit(4)->get(),
         ]);
     }

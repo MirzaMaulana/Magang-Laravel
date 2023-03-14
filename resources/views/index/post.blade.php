@@ -4,9 +4,6 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-10">
                 <div class="mt-3 text-center">
-                    {{-- <small class="px-1 rounded-3 float-start"
-                        style="border:solid 1px black">{{ $post->views > 1000000 ? number_format($post->views / 1000000, 2) . 'm' : ($post->views > 1000 ? number_format($post->views / 1000, 1, '.', '') . 'k' : $post->views) }}
-                        Views</small> --}}
                     <h1>{{ $post->title }}</h1>
                 </div>
 
@@ -55,10 +52,20 @@
                                     class="bi bi-hand-thumbs-up"></i></button>
                         </form>
                     @endif
-                    <button type="submit" class="btn btn-sm btn-primary me-2">Share this post <i
-                            class="bi bi-share"></i></button>
-                    <button type="submit" class="btn btn-sm btn-warning me-2">Save this post <i
-                            class="bi bi-save"></i></button>
+                    @if (auth()->check() && $postsave)
+                        <button class="btn btn-sm btn-success me-2">This Post has Saved <i
+                                class="bi bi-pin-angle"></i></button>
+                    @else
+                        <form action="{{ route('postsave.input') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <button class="button btn btn-sm btn-warning me-2">Save this post <i
+                                    class="bi bi-save"></i></button>
+                        </form>
+                    @endif
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url }}" target="_blank">
+                        <button class="btn btn-primary btn-sm">Share This Post <i class="bi bi-share"></i></button>
+                    </a>
                     {{-- end button group --}}
                 </div>
 
@@ -153,7 +160,7 @@
                                     <p>{{ $comment->content }}</p>
                                     <div class="d-flex" style="margin-top: -10px">
                                         <small class="text-muted me-2">{{ $comment->created_at->diffForHumans() }}</small>
-                                        @if (auth()->check())
+                                        @if (auth()->check() && $comment->replies->count() < 2)
                                             <button class="badge me-2 bg-success text-decoration-none border-0"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
@@ -161,12 +168,10 @@
                                     </div>
                                 </div>
                             </div>
-                            @foreach ($comment->replies as $reply)
+                            @foreach ($comment->replies as $key => $reply)
                                 @if ($reply->parent_id != null)
                                     {{-- Parents comments --}}
-                                    <div class="ms-4
-                                            mt-3 d-flex">
-
+                                    <div class="{{ $key < 2 && $key >= 1 ? 'ms-5' : 'ms-4' }} mt-3 d-flex">
                                         @if ($reply->user->image)
                                             <img src="{{ asset('storage/avatars/' . $reply->user->image) }}"
                                                 class="mr-3 me-3 rounded-circle" width="40" height="40"
@@ -196,9 +201,8 @@
                                                                 @csrf
                                                                 <input type="hidden" name="_method" value="DELETE">
                                                                 <button type="submit"
-                                                                    class="dropdown-item border-0 mr-2">
-                                                                    Delete Comment
-                                                                </button>
+                                                                    class="dropdown-item border-0 mr-2">Delete
+                                                                    Comment</button>
                                                             </form>
                                                         </li>
                                                     </ul>
@@ -209,7 +213,7 @@
                                             <div class="d-flex" style="margin-top: -10px">
                                                 <small
                                                     class="text-muted me-2">{{ $reply->created_at->diffForHumans() }}</small>
-                                                @if (auth()->check())
+                                                @if (auth()->check() && $key < 2 && $comment->replies->count() < 2)
                                                     <button class="badge me-2 bg-success text-decoration-none border-0"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
@@ -220,6 +224,7 @@
                                     {{-- end parents comments --}}
                                 @endif
                             @endforeach
+
                             <hr>
                         </div>
                         @include('includes.modal-editcomment')
@@ -269,5 +274,12 @@
     </div>
 @endsection
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#social-links').replaceWith(function() {
+                return $('> ul > li > a', this);
+            });
+        });
+    </script>
     <script src="{{ asset('js/comment.js') }}"></script>
 @endpush

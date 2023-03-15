@@ -4,7 +4,7 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-10">
                 <div class="mt-3 text-center">
-                    <h1>{{ $post->title }}</h1>
+                    <h1 style="font-family: Roboto Slab">{{ $post->title }}</h1>
                 </div>
 
                 {{-- User --}}
@@ -12,7 +12,8 @@
                     <div class="">
                         <div class="card-body text-center">
                             <h5 class="card-title">Author : {{ $post->created_by }}</h5>
-                            <p class="card-text"><small class="text-muted">{{ $post->created_at->format('l, j F Y') }}</small>
+                            <p class="card-text"><small
+                                    class="text-muted">{{ $post->created_at->format('l, j F Y') }}</small>
                             </p>
                             <div class="d-flex justify-content-center">
                                 <small class="px-1 mx-1 rounded-3"
@@ -160,7 +161,7 @@
                                     <p>{{ $comment->content }}</p>
                                     <div class="d-flex" style="margin-top: -10px">
                                         <small class="text-muted me-2">{{ $comment->created_at->diffForHumans() }}</small>
-                                        @if (auth()->check() && $comment->replies->count() < 2)
+                                        @if (auth()->check())
                                             <button class="badge me-2 bg-success text-decoration-none border-0"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>
@@ -171,7 +172,7 @@
                             @foreach ($comment->replies as $key => $reply)
                                 @if ($reply->parent_id != null)
                                     {{-- Parents comments --}}
-                                    <div class="{{ $key < 2 && $key >= 1 ? 'ms-5' : 'ms-4' }} mt-3 d-flex">
+                                    <div class="{{ $key > 0 ? 'ms-5' : 'ms-4' }} mt-3 d-flex">
                                         @if ($reply->user->image)
                                             <img src="{{ asset('storage/avatars/' . $reply->user->image) }}"
                                                 class="mr-3 me-3 rounded-circle" width="40" height="40"
@@ -213,7 +214,7 @@
                                             <div class="d-flex" style="margin-top: -10px">
                                                 <small
                                                     class="text-muted me-2">{{ $reply->created_at->diffForHumans() }}</small>
-                                                @if (auth()->check() && $key < 2 && $comment->replies->count() < 2)
+                                                @if (auth()->check() && $key == 0)
                                                     <button class="badge me-2 bg-success text-decoration-none border-0"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#replyCommentModal{{ $comment['id'] }}">Balas</button>

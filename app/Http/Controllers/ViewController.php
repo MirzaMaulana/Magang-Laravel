@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Tags;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\postLike;
 use App\Models\PostSave;
 use Jorenvh\Share\Share;

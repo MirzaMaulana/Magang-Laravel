@@ -15,14 +15,10 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="replyContent" class="form-label">Comment :</label>
-                        <textarea name="content" oninput="updateCount()" class="replyContent form-control" value="{{ old('content') }}"
-                            required></textarea>
-                        @error('content')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        <small>Number of characters left: <span class="counter"></span></small>
+                        <textarea name="content"
+                            oninput="document.getElementById('counter{{ $comment->id }}').innerHTML = 255 - this.value.length"
+                            id="replyContent{{ $comment->id }}" class="form-control" maxlength="255" value="{{ old('content') }}" required></textarea>
+                        <small>Number of characters left: <span id="counter{{ $comment->id }}"></span></small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -34,12 +30,3 @@
     </div>
 </form>
 <script src="{{ asset('js/submit.js') }}"></script>
-<script>
-    function updateCount() {
-        var maxLength = 255;
-        var currentLength = document.querySelector(".replyContent").value.length;
-        var charsLeft = maxLength - currentLength;
-
-        document.querySelector(".counter").innerHTML = charsLeft;
-    }
-</script>

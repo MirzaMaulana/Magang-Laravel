@@ -12,10 +12,10 @@
                         <div class="form-group">
                             <label for="content">Leave a comment</label>
                             <textarea name="content" oninput="postCount()" id="postContent" class="form-control" value="{{ old('content') }}"
-                                required rows="3"></textarea>
+                                required rows="3" maxlength="255"></textarea>
                             <small>Number of characters left: <span id="postcounter"></span></small>
                         </div>
-                        <button type="submit" id="button" class="mt-3 btn btn-outline-success">Submit</button>
+                        <button id="button" class="mt-3 btn btn-outline-success">Submit</button>
                     </form>
                 @else
                     <div class="alert alert-warning" role="alert">
